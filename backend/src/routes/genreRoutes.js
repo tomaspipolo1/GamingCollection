@@ -110,10 +110,65 @@ const {
  */
 router.get('/', getAllGenres);
 
-// GET /api/genres/active - Obtener solo géneros activos
+/**
+ * @swagger
+ * /api/genres/active:
+ *   get:
+ *     summary: Obtener géneros activos
+ *     tags: [Genres]
+ *     responses:
+ *       200:
+ *         description: Lista de géneros activos obtenida exitosamente
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                 message:
+ *                   type: string
+ *                 data:
+ *                   type: array
+ *                   items:
+ *                     $ref: '#/components/schemas/Genre'
+ *                 count:
+ *                   type: number
+ */
 router.get('/active', getActiveGenres);
 
-// GET /api/genres/:id - Obtener un género específico por ID
+/**
+ * @swagger
+ * /api/genres/{id}:
+ *   get:
+ *     summary: Obtener un género específico
+ *     tags: [Genres]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: ID del género
+ *     responses:
+ *       200:
+ *         description: Género obtenido exitosamente
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                 message:
+ *                   type: string
+ *                 data:
+ *                   $ref: '#/components/schemas/Genre'
+ *       404:
+ *         description: Género no encontrado
+ *       400:
+ *         description: ID inválido
+ */
 router.get('/:id', getGenreById);
 
 /**
@@ -160,11 +215,85 @@ router.get('/:id', getGenreById);
  */
 router.post('/', createGenre);
 
-// PUT /api/genres/:id - Actualizar un género existente
-// Body: { name?, description?, isActive? }
+/**
+ * @swagger
+ * /api/genres/{id}:
+ *   put:
+ *     summary: Actualizar un género
+ *     tags: [Genres]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: ID del género
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *                 minLength: 2
+ *                 maxLength: 50
+ *               description:
+ *                 type: string
+ *                 maxLength: 200
+ *               isActive:
+ *                 type: boolean
+ *             example:
+ *               name: RPG Actualizado
+ *               description: Descripción actualizada del género
+ *               isActive: true
+ *     responses:
+ *       200:
+ *         description: Género actualizado exitosamente
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                 message:
+ *                   type: string
+ *                 data:
+ *                   $ref: '#/components/schemas/Genre'
+ *       404:
+ *         description: Género no encontrado
+ *       400:
+ *         description: Error de validación
+ *   delete:
+ *     summary: Eliminar un género (soft delete)
+ *     tags: [Genres]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: ID del género
+ *     responses:
+ *       200:
+ *         description: Género eliminado exitosamente
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                 message:
+ *                   type: string
+ *                 data:
+ *                   $ref: '#/components/schemas/Genre'
+ *       404:
+ *         description: Género no encontrado
+ */
 router.put('/:id', updateGenre);
-
-// DELETE /api/genres/:id - Eliminar un género (soft delete)
 router.delete('/:id', deleteGenre);
 
 // DELETE /api/genres/:id/permanent - Eliminar permanentemente
