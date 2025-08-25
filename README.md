@@ -52,8 +52,7 @@ Esta es una aplicación web completa para la gestión de colecciones de videojue
 
 1. **Clonar el repositorio**
 ```bash
-git clone <url-del-repositorio>
-cd task-manager-fullstack
+git clone https://github.com/tomaspipolo1/GamingCollection.git
 ```
 
 2. **Ejecutar con Docker Compose**
@@ -95,77 +94,6 @@ docker-compose up -d
 - `PUT /api/games/:id` - Actualizar juego
 - `DELETE /api/games/:id` - Eliminar juego (soft delete)
 
-### Modelo de Género
-
-```json
-{
-  "_id": "ObjectId",
-  "name": "RPG",
-  "description": "Juegos de rol donde el jugador controla un personaje",
-  "isActive": true,
-  "createdAt": "2024-01-01T00:00:00.000Z",
-  "updatedAt": "2024-01-01T00:00:00.000Z"
-}
-```
-
-### Modelo de Videojuego
-
-```json
-{
-  "_id": "ObjectId",
-  "title": "The Witcher 3: Wild Hunt",
-  "platform": "Steam",
-  "genre": {
-    "_id": "ObjectId",
-    "name": "RPG",
-    "description": "..."
-  },
-  "status": "Sin Jugar",
-  "price": 39.99,
-  "currency": "USD",
-  "description": "RPG épico de mundo abierto",
-  "releaseDate": "2015-05-19T00:00:00.000Z",
-  "imageUrl": "https://example.com/witcher3.jpg",
-  "isActive": true,
-  "createdAt": "2024-01-01T00:00:00.000Z",
-  "updatedAt": "2024-01-01T00:00:00.000Z",
-  "formattedPrice": "USD 39.99"
-}
-```
-
-## Ejemplos de Uso
-
-### Crear un Género
-```bash
-POST http://localhost:5000/api/genres
-Content-Type: application/json
-
-{
-  "name": "RPG",
-  "description": "Juegos de rol donde el jugador controla un personaje"
-}
-```
-
-### Crear un Videojuego
-```bash
-POST http://localhost:5000/api/games
-Content-Type: application/json
-
-{
-  "title": "The Witcher 3: Wild Hunt",
-  "platform": "Steam",
-  "genre": "65f1234567890abcdef12345",
-  "status": "Sin Jugar",
-  "price": 39.99,
-  "currency": "USD",
-  "description": "RPG épico de mundo abierto"
-}
-```
-
-### Buscar Videojuegos
-```bash
-GET http://localhost:5000/api/games?search=witcher&platform=Steam&page=1&limit=5
-```
 
 ## Estado del Proyecto
 
@@ -191,33 +119,3 @@ GET http://localhost:5000/api/games?search=witcher&platform=Steam&page=1&limit=5
 4. Configurar Docker Compose
 5. Desplegar en Azure
 
-## Estructura Actual del Proyecto
-
-```
-gaming-collection/
-├── backend/                 # ✅ API REST Completa
-│   ├── src/
-│   │   ├── controllers/     # Lógica de negocio
-│   │   ├── models/         # Modelos de MongoDB
-│   │   ├── routes/         # Definición de endpoints
-│   │   ├── middleware/     # Validaciones y seguridad
-│   │   └── config/         # Configuraciones
-│   ├── package.json        # Dependencias del backend
-│   └── server.js          # Servidor principal
-├── frontend/               # 🚧 Pendiente de desarrollo
-├── docker-compose.yml     # 🚧 Pendiente
-├── docs/                  # 📋 Documentación
-└── README.md             # 📖 Esta documentación
-```
-
-## Contribución
-
-Este proyecto fue desarrollado como trabajo práctico académico para la materia Desarrollo Full Stack.
-
-**Autor:** Estudiante ADR  
-**Fecha:** 2024  
-**Institución:** Facultad
-
-## Licencia
-
-Este proyecto es para fines educativos y académicos.
