@@ -30,8 +30,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // ===== CONEXIÓN A MONGODB =====
-// Comentamos temporalmente para probar sin MongoDB
-/*
 mongoose.connect(MONGODB_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true
@@ -43,9 +41,6 @@ mongoose.connect(MONGODB_URI, {
     console.error('❌ Error conectando a MongoDB:', error);
     process.exit(1);
 });
-*/
-
-console.log('⚠️  MongoDB desconectado temporalmente para pruebas');
 
 // ===== RUTAS =====
 // Ruta de bienvenida
@@ -54,9 +49,36 @@ app.get('/', (req, res) => {
         message: '🎮 Gaming Collection API',
         version: '1.0.0',
         status: 'Running',
+        description: 'API para gestión de colección de videojuegos',
         endpoints: {
-            games: '/api/games',
-            genres: '/api/genres'
+            // Endpoints de Géneros
+            genres: {
+                getAll: 'GET /api/genres',
+                getActive: 'GET /api/genres/active',
+                getById: 'GET /api/genres/:id',
+                create: 'POST /api/genres',
+                update: 'PUT /api/genres/:id',
+                delete: 'DELETE /api/genres/:id'
+            },
+            // Endpoints de Juegos
+            games: {
+                getAll: 'GET /api/games',
+                getById: 'GET /api/games/:id',
+                search: 'GET /api/games/search/:term',
+                byStatus: 'GET /api/games/by-status/:status',
+                byPlatform: 'GET /api/games/by-platform/:platform',
+                create: 'POST /api/games',
+                update: 'PUT /api/games/:id',
+                delete: 'DELETE /api/games/:id'
+            }
+        },
+        documentation: {
+            health: 'GET /health',
+            examples: {
+                searchGames: '/api/games?search=witcher&platform=Steam&page=1&limit=5',
+                filterByStatus: '/api/games/by-status/Jugado',
+                activeGenres: '/api/genres/active'
+            }
         }
     });
 });
@@ -70,11 +92,13 @@ app.get('/health', (req, res) => {
     });
 });
 
-// Aquí importaremos las rutas cuando las creemos
-// const gameRoutes = require('./src/routes/gameRoutes');
-// const genreRoutes = require('./src/routes/genreRoutes');
-// app.use('/api/games', gameRoutes);
-// app.use('/api/genres', genreRoutes);
+// ===== IMPORTAR RUTAS =====
+const gameRoutes = require('./src/routes/gameRoutes');
+const genreRoutes = require('./src/routes/genreRoutes');
+
+// ===== USAR RUTAS =====
+app.use('/api/games', gameRoutes);
+app.use('/api/genres', genreRoutes);
 
 // ===== MANEJO DE ERRORES =====
 // Ruta no encontrada

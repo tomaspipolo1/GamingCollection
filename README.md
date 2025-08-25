@@ -1,23 +1,25 @@
-# Task Manager - Aplicación Full Stack
+# 🎮 Gaming Collection - Aplicación Full Stack
 
 ## Descripción del Proyecto
 
-Esta es una aplicación web completa de gestión de tareas desarrollada como trabajo práctico para la materia de Desarrollo Full Stack. La aplicación permite a los usuarios crear, leer, actualizar y eliminar tareas con funcionalidades adicionales como categorización, prioridades y estados.
+Esta es una aplicación web completa para la gestión de colecciones de videojuegos, desarrollada como trabajo práctico para la materia de Desarrollo Full Stack. La aplicación permite a los usuarios crear, leer, actualizar y eliminar videojuegos y géneros, con funcionalidades avanzadas de búsqueda, filtrado y categorización.
 
 ## Características Principales
 
-- ✅ **CRUD completo de tareas**
-- 🏷️ **Categorización de tareas**
-- ⚡ **Sistema de prioridades**
-- 📊 **Estados de tareas (Pendiente, En Progreso, Completada)**
-- 🔍 **Búsqueda y filtrado**
-- 📱 **Diseño responsive**
+- 🎮 **CRUD completo de videojuegos**
+- 🎭 **Gestión de géneros de videojuegos** 
+- 🖥️ **Múltiples plataformas** (Steam, Epic Games, Xbox Game Pass, etc.)
+- 📊 **Estados de juegos** (Jugado, Sin Jugar, Comprar)
+- 💰 **Gestión de precios** con múltiples monedas
+- 🔍 **Búsqueda y filtrado avanzado**
+- 📄 **Paginación** para grandes colecciones
+- 📱 **Diseño responsive** con temática gaming
 
 ## Arquitectura
 
 ```
-├── backend/          # API REST con Node.js + Express
-├── frontend/         # Aplicación React + TypeScript
+├── backend/          # API REST con Node.js + Express + MongoDB
+├── frontend/         # Aplicación React + TypeScript + Tailwind CSS
 ├── docker-compose.yml # Orquestación de servicios
 └── docs/            # Documentación del proyecto
 ```
@@ -25,18 +27,18 @@ Esta es una aplicación web completa de gestión de tareas desarrollada como tra
 ## Tecnologías Utilizadas
 
 ### Backend
-- **Node.js** + **Express.js**
-- **MongoDB** como base de datos
-- **Mongoose** para ODM
-- **CORS** para comunicación cross-origin
-- **Helmet** para seguridad
+- **Node.js** + **Express.js** - Framework web para la API REST
+- **MongoDB** - Base de datos NoSQL para almacenar videojuegos y géneros
+- **Mongoose** - ODM para modelado de datos y validaciones
+- **CORS** - Comunicación cross-origin entre frontend y backend
+- **Helmet** - Middleware de seguridad
 
-### Frontend
-- **React 18** con **TypeScript**
-- **Tailwind CSS** para estilos
-- **Axios** para comunicación con API
-- **React Router** para navegación
-- **React Hook Form** para formularios
+### Frontend (Pendiente de desarrollo)
+- **React 18** con **TypeScript** - Framework para interfaz de usuario
+- **Tailwind CSS** - Framework de estilos con temática gaming
+- **Axios** - Cliente HTTP para comunicación con API
+- **React Router** - Navegación entre páginas
+- **React Hook Form** - Manejo de formularios
 
 ### DevOps & Despliegue
 - **Docker** para contenerización
@@ -73,33 +75,149 @@ docker-compose up -d
 
 ## Estructura de la API
 
-### Endpoints
+### Endpoints de Géneros
 
-- `GET /api/tasks` - Obtener todas las tareas
-- `GET /api/tasks/:id` - Obtener tarea por ID
-- `POST /api/tasks` - Crear nueva tarea
-- `PUT /api/tasks/:id` - Actualizar tarea
-- `DELETE /api/tasks/:id` - Eliminar tarea
+- `GET /api/genres` - Obtener todos los géneros
+- `GET /api/genres/active` - Obtener géneros activos
+- `GET /api/genres/:id` - Obtener género por ID
+- `POST /api/genres` - Crear nuevo género
+- `PUT /api/genres/:id` - Actualizar género
+- `DELETE /api/genres/:id` - Eliminar género (soft delete)
 
-### Modelo de Tarea
+### Endpoints de Videojuegos
+
+- `GET /api/games` - Obtener todos los juegos (con filtros y paginación)
+- `GET /api/games/:id` - Obtener juego por ID
+- `GET /api/games/search/:term` - Buscar juegos por título
+- `GET /api/games/by-status/:status` - Filtrar por estado
+- `GET /api/games/by-platform/:platform` - Filtrar por plataforma
+- `POST /api/games` - Crear nuevo juego
+- `PUT /api/games/:id` - Actualizar juego
+- `DELETE /api/games/:id` - Eliminar juego (soft delete)
+
+### Modelo de Género
 
 ```json
 {
-  "id": "string",
-  "title": "string",
-  "description": "string",
-  "category": "string",
-  "priority": "low|medium|high",
-  "status": "pending|in-progress|completed",
-  "createdAt": "date",
-  "updatedAt": "date"
+  "_id": "ObjectId",
+  "name": "RPG",
+  "description": "Juegos de rol donde el jugador controla un personaje",
+  "isActive": true,
+  "createdAt": "2024-01-01T00:00:00.000Z",
+  "updatedAt": "2024-01-01T00:00:00.000Z"
 }
+```
+
+### Modelo de Videojuego
+
+```json
+{
+  "_id": "ObjectId",
+  "title": "The Witcher 3: Wild Hunt",
+  "platform": "Steam",
+  "genre": {
+    "_id": "ObjectId",
+    "name": "RPG",
+    "description": "..."
+  },
+  "status": "Sin Jugar",
+  "price": 39.99,
+  "currency": "USD",
+  "description": "RPG épico de mundo abierto",
+  "releaseDate": "2015-05-19T00:00:00.000Z",
+  "imageUrl": "https://example.com/witcher3.jpg",
+  "isActive": true,
+  "createdAt": "2024-01-01T00:00:00.000Z",
+  "updatedAt": "2024-01-01T00:00:00.000Z",
+  "formattedPrice": "USD 39.99"
+}
+```
+
+## Ejemplos de Uso
+
+### Crear un Género
+```bash
+POST http://localhost:5000/api/genres
+Content-Type: application/json
+
+{
+  "name": "RPG",
+  "description": "Juegos de rol donde el jugador controla un personaje"
+}
+```
+
+### Crear un Videojuego
+```bash
+POST http://localhost:5000/api/games
+Content-Type: application/json
+
+{
+  "title": "The Witcher 3: Wild Hunt",
+  "platform": "Steam",
+  "genre": "65f1234567890abcdef12345",
+  "status": "Sin Jugar",
+  "price": 39.99,
+  "currency": "USD",
+  "description": "RPG épico de mundo abierto"
+}
+```
+
+### Buscar Videojuegos
+```bash
+GET http://localhost:5000/api/games?search=witcher&platform=Steam&page=1&limit=5
+```
+
+## Estado del Proyecto
+
+### ✅ Completado
+- ✅ **Backend API REST** - Completamente funcional
+- ✅ **Modelos de datos** - Genre y Game con validaciones
+- ✅ **16 endpoints** - CRUD completo para ambas entidades
+- ✅ **Validaciones robustas** - Manejo de errores y datos
+- ✅ **Filtros y búsquedas** - Funcionalidades avanzadas
+- ✅ **Paginación** - Para manejo de grandes volúmenes
+- ✅ **Documentación** - API documentada
+
+### 🚧 En Desarrollo
+- 🚧 **Frontend React** - Interfaz de usuario con temática gaming
+- 🚧 **Dockerfiles** - Contenerización de servicios
+- 🚧 **Docker Compose** - Orquestación completa
+- 🚧 **Despliegue Azure** - Configuración en la nube
+
+### 📋 Próximos Pasos
+1. Desarrollar interfaz React con TypeScript
+2. Implementar diseño gaming con Tailwind CSS
+3. Crear Dockerfiles para backend y frontend
+4. Configurar Docker Compose
+5. Desplegar en Azure
+
+## Estructura Actual del Proyecto
+
+```
+gaming-collection/
+├── backend/                 # ✅ API REST Completa
+│   ├── src/
+│   │   ├── controllers/     # Lógica de negocio
+│   │   ├── models/         # Modelos de MongoDB
+│   │   ├── routes/         # Definición de endpoints
+│   │   ├── middleware/     # Validaciones y seguridad
+│   │   └── config/         # Configuraciones
+│   ├── package.json        # Dependencias del backend
+│   └── server.js          # Servidor principal
+├── frontend/               # 🚧 Pendiente de desarrollo
+├── docker-compose.yml     # 🚧 Pendiente
+├── docs/                  # 📋 Documentación
+└── README.md             # 📖 Esta documentación
 ```
 
 ## Contribución
 
-Este proyecto fue desarrollado como trabajo práctico académico.
+Este proyecto fue desarrollado como trabajo práctico académico para la materia Desarrollo Full Stack.
+
+**Autor:** Estudiante ADR  
+**Fecha:** 2024  
+**Institución:** Facultad
 
 ## Licencia
 
-Este proyecto es para fines educativos.
+Este proyecto es para fines educativos y académicos.
