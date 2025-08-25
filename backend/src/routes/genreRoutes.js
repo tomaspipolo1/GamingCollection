@@ -4,6 +4,66 @@
 const express = require('express');
 const router = express.Router();
 
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     Genre:
+ *       type: object
+ *       required:
+ *         - name
+ *       properties:
+ *         _id:
+ *           type: string
+ *           description: ID único del género
+ *         name:
+ *           type: string
+ *           description: Nombre del género
+ *           minLength: 2
+ *           maxLength: 50
+ *         description:
+ *           type: string
+ *           description: Descripción del género
+ *           maxLength: 200
+ *         isActive:
+ *           type: boolean
+ *           description: Estado activo del género
+ *           default: true
+ *         createdAt:
+ *           type: string
+ *           format: date-time
+ *           description: Fecha de creación
+ *         updatedAt:
+ *           type: string
+ *           format: date-time
+ *           description: Fecha de última actualización
+ *       example:
+ *         _id: "65f1234567890abcdef12345"
+ *         name: "RPG"
+ *         description: "Juegos de rol donde el jugador controla un personaje"
+ *         isActive: true
+ *         createdAt: "2024-01-01T00:00:00.000Z"
+ *         updatedAt: "2024-01-01T00:00:00.000Z"
+ *     
+ *     GenreInput:
+ *       type: object
+ *       required:
+ *         - name
+ *       properties:
+ *         name:
+ *           type: string
+ *           description: Nombre del género
+ *           minLength: 2
+ *           maxLength: 50
+ *         description:
+ *           type: string
+ *           description: Descripción del género
+ *           maxLength: 200
+ *       example:
+ *         name: "RPG"
+ *         description: "Juegos de rol donde el jugador controla un personaje"
+ */
+
 // Importar el controller
 const {
     getAllGenres,
@@ -17,8 +77,37 @@ const {
 
 // ===== RUTAS PÚBLICAS =====
 
-// GET /api/genres - Obtener todos los géneros
-// Query params: ?active=true (para filtrar activos)
+/**
+ * @swagger
+ * /api/genres:
+ *   get:
+ *     summary: Obtener todos los géneros
+ *     tags: [Genres]
+ *     parameters:
+ *       - in: query
+ *         name: active
+ *         schema:
+ *           type: boolean
+ *         description: Filtrar por géneros activos
+ *     responses:
+ *       200:
+ *         description: Lista de géneros obtenida exitosamente
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                 message:
+ *                   type: string
+ *                 data:
+ *                   type: array
+ *                   items:
+ *                     $ref: '#/components/schemas/Genre'
+ *                 count:
+ *                   type: number
+ */
 router.get('/', getAllGenres);
 
 // GET /api/genres/active - Obtener solo géneros activos
@@ -27,8 +116,48 @@ router.get('/active', getActiveGenres);
 // GET /api/genres/:id - Obtener un género específico por ID
 router.get('/:id', getGenreById);
 
-// POST /api/genres - Crear un nuevo género
-// Body: { name, description }
+/**
+ * @swagger
+ * /api/genres:
+ *   post:
+ *     summary: Crear un nuevo género
+ *     tags: [Genres]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/GenreInput'
+ *     responses:
+ *       201:
+ *         description: Género creado exitosamente
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                 message:
+ *                   type: string
+ *                 data:
+ *                   $ref: '#/components/schemas/Genre'
+ *       400:
+ *         description: Error de validación
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                 message:
+ *                   type: string
+ *                 errors:
+ *                   type: array
+ *                   items:
+ *                     type: string
+ */
 router.post('/', createGenre);
 
 // PUT /api/genres/:id - Actualizar un género existente

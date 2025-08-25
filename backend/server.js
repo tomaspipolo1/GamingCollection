@@ -73,12 +73,18 @@ app.get('/', (req, res) => {
             }
         },
         documentation: {
+            swagger: 'GET /api-docs',
+            swaggerJson: 'GET /api-docs/swagger.json',
             health: 'GET /health',
             examples: {
                 searchGames: '/api/games?search=witcher&platform=Steam&page=1&limit=5',
                 filterByStatus: '/api/games/by-status/Jugado',
                 activeGenres: '/api/genres/active'
             }
+        },
+        links: {
+            swaggerUI: `http://localhost:${PORT}/api-docs`,
+            apiHealth: `http://localhost:${PORT}/health`
         }
     });
 });
@@ -92,9 +98,21 @@ app.get('/health', (req, res) => {
     });
 });
 
-// ===== IMPORTAR RUTAS =====
+// ===== IMPORTAR RUTAS Y SWAGGER =====
 const gameRoutes = require('./src/routes/gameRoutes');
 const genreRoutes = require('./src/routes/genreRoutes');
+const { swaggerSpec, swaggerUi, swaggerUiOptions } = require('./src/config/swagger');
+
+// ===== CONFIGURAR SWAGGER =====
+// Swagger JSON endpoint
+app.get('/api-docs/swagger.json', (req, res) => {
+    res.setHeader('Content-Type', 'application/json');
+    res.send(swaggerSpec);
+});
+
+// Swagger UI
+app.use('/api-docs', swaggerUi.serve);
+app.get('/api-docs', swaggerUi.setup(swaggerSpec, swaggerUiOptions));
 
 // ===== USAR RUTAS =====
 app.use('/api/games', gameRoutes);
