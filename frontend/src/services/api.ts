@@ -2,6 +2,7 @@
 
 import axios, { AxiosInstance, AxiosError } from 'axios';
 import { ApiResponse, ApiListResponse, ApiError } from '../types';
+import NotificationService from './notificationService';
 
 // Configuración base de Axios
 const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000';
@@ -55,8 +56,30 @@ apiClient.interceptors.response.use(
     if (error.response?.status === 401) {
       // Token expirado o no autorizado
       localStorage.removeItem('authToken');
+      NotificationService.error(
+        'Sesión expirada',
+        'Tu sesión ha expirado. Por favor, inicia sesión nuevamente.'
+      );
       // Redireccionar a login si existe
       // window.location.href = '/login';
+    } else if (error.response?.status === 500) {
+      // Error interno del servidor
+      NotificationService.error(
+        'Error del servidor',
+        'Ha ocurrido un error interno. Por favor, inténtalo más tarde.'
+      );
+    } else if (error.code === 'NETWORK_ERROR') {
+      // Error de red
+      NotificationService.error(
+        'Error de conexión',
+        'No se pudo conectar con el servidor. Verifica tu conexión a internet.'
+      );
+    } else if (error.code === 'ECONNABORTED') {
+      // Timeout
+      NotificationService.error(
+        'Tiempo agotado',
+        'La solicitud tardó demasiado. Inténtalo de nuevo.'
+      );
     }
     
     return Promise.reject(error);

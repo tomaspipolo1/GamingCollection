@@ -4,6 +4,10 @@
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
 
+/* Importar SweetAlert2 y estilos gaming */
+@import 'sweetalert2/dist/sweetalert2.min.css';
+@import './sweetalert-gaming.css';
+
 /* Importar fuentes gaming */
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap');
 
@@ -259,4 +263,56 @@ body {
 @keyframes blink-caret {
   from, to { border-color: transparent; }
   50% { border-color: var(--gaming-highlight); }
+}
+
+/* ===== ANIMACIONES ADICIONALES PARA COMPONENTES ===== */
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-slideUp {
+  animation: slideUp 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes glow {
+  0%, 100% {
+    box-shadow: 0 0 10px var(--gaming-highlight), 0 0 20px var(--gaming-highlight), 0 0 30px var(--gaming-highlight);
+  }
+  50% {
+    box-shadow: 0 0 15px var(--gaming-highlight), 0 0 25px var(--gaming-highlight), 0 0 35px var(--gaming-highlight);
+  }
+}
+
+.animate-glow {
+  animation: glow 2s ease-in-out infinite;
+}
+
+/* ===== SOMBRAS GAMING ADICIONALES ===== */
+.shadow-gaming {
+  box-shadow: 0 4px 14px 0 rgba(22, 160, 133, 0.3);
+}
+
+.shadow-gaming-lg {
+  box-shadow: 0 10px 25px -3px rgba(22, 160, 133, 0.4), 0 4px 6px -2px rgba(22, 160, 133, 0.2);
 }
