@@ -1,7 +1,7 @@
 // ===== GAME SERVICE =====
 
 import axios from 'axios';
-import { Game, GamesResponse, GameFormData, GameFilters } from '../types';
+import { Game, GamesResponse, GameInput, GameFilters } from '../types';
 
 // API Base URL - adjust according to your backend
 const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
@@ -62,11 +62,17 @@ export const gameService = {
       if (filters.sortBy) params.append('sortBy', filters.sortBy);
       if (filters.sortOrder) params.append('sortOrder', filters.sortOrder);
 
-      const response = await api.get(`/games?${params.toString()}`);
+      const url = `/games?${params.toString()}`;
+      console.log('🌐 GameService: Haciendo petición GET a:', url);
+      console.log('🔗 URL completa:', `${API_BASE_URL}${url}`);
+      
+      const response = await api.get(url);
+      console.log('📥 GameService: Respuesta recibida:', response.data);
       return response.data;
-    } catch (error) {
-      console.error('Error fetching games:', error);
-      throw new Error('Error al obtener los juegos');
+    } catch (error: any) {
+      console.error('❌ GameService: Error fetching games:', error);
+      console.error('🔍 GameService: Detalles del error:', error.message, error.response?.data);
+      throw new Error(`Error al obtener los juegos: ${error.message}`);
     }
   },
 
@@ -82,18 +88,21 @@ export const gameService = {
   },
 
   // Create new game
-  async createGame(gameData: GameFormData): Promise<Game> {
+  async createGame(gameData: GameInput): Promise<Game> {
     try {
+      console.log('🎮 GameService: Creando juego:', gameData);
       const response = await api.post('/games', gameData);
+      console.log('✅ GameService: Juego creado exitosamente:', response.data);
       return response.data;
-    } catch (error) {
-      console.error('Error creating game:', error);
-      throw new Error('Error al crear el juego');
+    } catch (error: any) {
+      console.error('❌ GameService: Error creando juego:', error);
+      console.error('🔍 GameService: Detalles del error:', error.message, error.response?.data);
+      throw error;
     }
   },
 
   // Update game
-  async updateGame(id: string, gameData: Partial<GameFormData>): Promise<Game> {
+  async updateGame(id: string, gameData: Partial<GameInput>): Promise<Game> {
     try {
       const response = await api.put(`/games/${id}`, gameData);
       return response.data;

@@ -117,14 +117,10 @@
   background: rgba(255, 255, 255, 0.15);
 }
 
-/* ===== TABLE SECTION ===== */
-.table-section {
+/* ===== GAMES GRID SECTION ===== */
+.games-grid-section {
   width: 100%;
-  background: rgba(0, 0, 0, 0.3);
-  border-radius: 16px;
-  overflow: hidden;
-  border: 1px solid rgba(0, 255, 136, 0.2);
-  backdrop-filter: blur(10px);
+  /* Contenedor limpio sin fondo ni bordes para mostrar solo las tarjetas */
 }
 
 /* ===== LOADING STATE ===== */

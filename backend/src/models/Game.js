@@ -79,12 +79,12 @@ const gameSchema = new mongoose.Schema({
         type: Date
     },
     
-    // Imagen del juego (opcional)
+    // Imagen del juego (opcional) - Por ahora solo URL externa
     image: {
         type: String,
-        trim: true
-        // El campo almacenará la ruta del archivo subido
-        // La validación se hará en el controlador al procesar el upload
+        trim: true,
+        default: null
+        // En el futuro se implementará upload de archivos
     },
     
     // Estado activo/inactivo
@@ -143,16 +143,11 @@ gameSchema.methods.toJSON = function() {
         game.formattedPrice = `${game.currency} ${game.price.toFixed(2)}`;
     }
     
-    // Agregar información de imagen si existe
-    if (game.image) {
-        game.hasImage = true;
-        // Construir URL completa de la imagen
-        game.imageUrl = `/uploads/games/${game.image}`;
-    } else {
-        game.hasImage = false;
-        game.image = null;
-        game.imageUrl = null;
-    }
+    // Por ahora siempre usamos icono por defecto
+    game.hasImage = false;
+    game.image = null;
+    game.imageUrl = null;
+    game.defaultIcon = '🎮'; // Icono de joystick por defecto
     
     return game;
 };

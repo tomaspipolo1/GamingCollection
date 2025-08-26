@@ -40,6 +40,7 @@ export interface Game {
   updatedAt: string;
   formattedPrice: string;
   hasImage?: boolean;
+  defaultIcon?: string; // Icono por defecto (🎮)
 }
 
 export interface GameInput {
@@ -155,12 +156,26 @@ export interface GameFormData {
 
 // ===== TIPOS DE RESPUESTA API =====
 export interface GamesResponse {
-  games: Game[];
-  totalGames: number;
-  totalPages: number;
-  currentPage: number;
-  hasNextPage: boolean;
-  hasPrevPage: boolean;
+  // Estructura nueva del backend
+  games?: Game[];
+  totalGames?: number;
+  totalPages?: number;
+  currentPage?: number;
+  hasNextPage?: boolean;
+  hasPrevPage?: boolean;
+  
+  // Estructura actual del backend (para compatibilidad)
+  data?: Game[];
+  pagination?: {
+    page: number;
+    limit: number;
+    total: number;
+    pages: number;
+  };
+  
+  // Campos comunes
+  success: boolean;
+  message: string;
 }
 
 export interface GenresResponse {

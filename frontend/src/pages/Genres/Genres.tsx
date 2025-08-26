@@ -181,7 +181,7 @@ const Genres: React.FC = () => {
         </div>
 
         {/* ===== TABLA DE GÉNEROS ===== */}
-        <div className="table-section">
+        <div className="genres-table-section">
           {loading ? (
             <div className="loading-container">
               <div className="loading-spinner"></div>

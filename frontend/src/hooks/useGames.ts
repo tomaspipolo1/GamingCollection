@@ -46,16 +46,29 @@ export const useGames = () => {
 
       // Fetch from API
       console.log('🔄 Conectando con API...');
+      console.log('📍 URL de la API:', process.env.REACT_APP_API_URL || 'http://localhost:5000/api');
+      console.log('🔍 Filtros aplicados:', filters);
+      
       const response: GamesResponse = await gameService.getGames(filters);
       console.log('✅ API conectada exitosamente:', response);
       
-      setGames(response.games || []);
-      setTotalPages(response.totalPages || 1);
-      setTotalGames(response.totalGames || 0);
+      // Adaptar la respuesta del backend al formato del frontend
+      const games = response.data || response.games || [];
+      const totalGames = response.pagination?.total || response.totalGames || 0;
+      const totalPages = response.pagination?.pages || response.totalPages || 1;
       
-    } catch (err) {
-      console.error('Error fetching games:', err);
-      setError('Error al cargar los juegos. Por favor, intenta nuevamente.');
+      console.log('🎮 Juegos recibidos:', games);
+      console.log('📊 Total de juegos:', totalGames);
+      console.log('📄 Total de páginas:', totalPages);
+      
+      setGames(games);
+      setTotalPages(totalPages);
+      setTotalGames(totalGames);
+      
+    } catch (err: any) {
+      console.error('❌ Error fetching games:', err);
+      console.error('🔍 Detalles del error:', err.message, err.response?.data);
+      setError(`Error al cargar los juegos: ${err.message}`);
       setGames([]);
     } finally {
       setLoading(false);

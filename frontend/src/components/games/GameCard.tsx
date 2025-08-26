@@ -49,20 +49,8 @@ const GameCard: React.FC<GameCardProps> = ({ game, onEdit, onDelete }) => {
     <div className="game-card">
       {/* Imagen del juego */}
       <div className="game-image-container">
-        {game.image ? (
-          <img 
-            src={game.image} 
-            alt={game.title} 
-            className="game-image"
-            onError={(e) => {
-              const target = e.target as HTMLImageElement;
-              target.style.display = 'none';
-              target.nextElementSibling?.classList.remove('hidden');
-            }}
-          />
-        ) : null}
-        <div className={`game-image-placeholder ${game.image ? 'hidden' : ''}`}>
-          🎮
+        <div className="game-image-placeholder">
+          {game.defaultIcon || '🎮'}
         </div>
       </div>
 
@@ -71,15 +59,15 @@ const GameCard: React.FC<GameCardProps> = ({ game, onEdit, onDelete }) => {
         {/* Título */}
         <h3 className="game-title">{game.title}</h3>
         
-        {/* Plataforma y Género */}
-        <div className="game-meta">
-          <span className="game-platform">
-            {getPlatformIcon(game.platform)} {game.platform}
-          </span>
-          <span className="game-genre">
-            🏷️ {game.genre}
-          </span>
-        </div>
+                 {/* Plataforma y Género */}
+         <div className="game-meta">
+           <span className="game-platform">
+             {getPlatformIcon(game.platform)} {game.platform}
+           </span>
+           <span className="game-genre">
+             🏷️ {game.genre.name}
+           </span>
+         </div>
         
         {/* Status */}
         <div className={`game-status ${getStatusColor(game.status)}`}>

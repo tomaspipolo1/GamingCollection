@@ -2,8 +2,9 @@
 
 import React, { useState } from 'react';
 import Swal from 'sweetalert2';
-import GameTable from '../../components/games/GameTable';
+import GameGrid from '../../components/games/GameGrid';
 import DeleteModal from '../../components/games/DeleteModal';
+import AddGameModal from '../../components/games/AddGameModal';
 import { ConnectionStatus } from '../../components/common';
 import { useGames } from '../../hooks/useGames';
 import { Game } from '../../types';
@@ -24,6 +25,7 @@ const Games: React.FC = () => {
 
   const [gameToDelete, setGameToDelete] = useState<Game | null>(null);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [showAddModal, setShowAddModal] = useState(false);
 
   // Handle delete confirmation
   const handleDeleteClick = (game: Game) => {
@@ -75,8 +77,13 @@ const Games: React.FC = () => {
 
   // Handle add new game
   const handleAddGame = () => {
-    console.log('Add new game');
-    // TODO: Navigate to add form
+    setShowAddModal(true);
+  };
+
+  // Handle add modal success
+  const handleAddModalSuccess = () => {
+    // Refresh games list after adding
+    // The modal will handle the refresh automatically
   };
 
   return (
@@ -117,8 +124,8 @@ const Games: React.FC = () => {
           </div>
         </div>
 
-        {/* ===== TABLA DE JUEGOS ===== */}
-        <div className="table-section">
+        {/* ===== GRID DE JUEGOS ===== */}
+        <div className="games-grid-section">
           {loading ? (
             <div className="loading-container">
               <div className="loading-spinner"></div>
@@ -129,7 +136,7 @@ const Games: React.FC = () => {
               <p className="error-message">❌ {error}</p>
             </div>
           ) : (
-            <GameTable 
+            <GameGrid 
               games={games}
               onEdit={handleEditClick}
               onDelete={handleDeleteClick}
@@ -186,6 +193,18 @@ const Games: React.FC = () => {
         game={gameToDelete}
         onConfirm={handleConfirmDelete}
         onCancel={handleCancelDelete}
+      />
+
+      {/* ===== ADD GAME MODAL ===== */}
+      <AddGameModal 
+        isOpen={showAddModal}
+        onClose={() => setShowAddModal(false)}
+        onSuccess={handleAddModalSuccess}
+        onRefresh={() => {
+          // Refresh games list using the hook
+          // This will trigger a new fetch of games
+          window.location.reload();
+        }}
       />
     </div>
   );

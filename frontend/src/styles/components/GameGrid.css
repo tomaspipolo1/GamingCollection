@@ -1,0 +1,122 @@
+/* ===== GAME GRID STYLES ===== */
+
+.game-grid-container {
+  width: 100%;
+  margin: 0 auto;
+}
+
+.game-grid {
+  display: grid;
+  gap: 24px;
+  padding: 0;
+}
+
+/* ===== RESPONSIVE GRID LAYOUT ===== */
+
+/* Móvil - 1 columna */
+@media (max-width: 768px) {
+  .game-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+}
+
+/* Tablet - 2 columnas */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .game-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 22px;
+  }
+}
+
+/* Desktop - 3 columnas */
+@media (min-width: 1025px) and (max-width: 1440px) {
+  .game-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+}
+
+/* Desktop grande - 4 columnas */
+@media (min-width: 1441px) {
+  .game-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 28px;
+  }
+}
+
+/* ===== EMPTY STATE ===== */
+
+.empty-games-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 20px;
+  text-align: center;
+}
+
+.empty-games-content {
+  max-width: 400px;
+}
+
+.empty-icon {
+  font-size: 4rem;
+  margin-bottom: 16px;
+  opacity: 0.7;
+}
+
+.empty-title {
+  color: white;
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 0 0 12px 0;
+}
+
+.empty-message {
+  color: #d1d5db;
+  font-size: 1rem;
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* ===== LOADING STATE ===== */
+
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 20px;
+  color: white;
+}
+
+.loading-spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid rgba(0, 255, 136, 0.3);
+  border-top: 3px solid #00ff88;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 16px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* ===== ERROR STATE ===== */
+
+.error-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 20px;
+  text-align: center;
+}
+
+.error-message {
+  color: #ff6b6b;
+  font-size: 1.1rem;
+  margin: 0;
+}
