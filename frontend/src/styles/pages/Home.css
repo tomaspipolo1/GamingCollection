@@ -9,26 +9,54 @@
   background-repeat: no-repeat;
   display: flex;
   flex-direction: column;
-  overflow-x: hidden;
+  overflow-x: hidden; /* Prevenir scroll horizontal global */
 }
 
 .home-content {
   flex: 1;
-  padding: 16px;
-  padding-top: 80px; /* Compensar altura del header fijo */
+  padding: 0; /* Sin padding para permitir full-width */
+  padding-top: 0; /* Sin padding top para que hero llegue hasta arriba */
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 0; /* Sin gaps para evitar espacios */
+  overflow-x: hidden; /* Prevenir scroll horizontal */
 }
 
 /* ===== HERO SECTION ===== */
 .hero-section {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 50vh;
+  min-height: 100vh; /* Altura completa de la ventana */
   text-align: center;
-  padding: 16px 0;
+  padding: 80px 16px 16px 16px; /* Padding top para compensar header */
+  /* Background image se aplica via inline style en el componente */
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  width: 100vw;
+  margin-left: calc(-50vw + 50%);
+  overflow: hidden;
+  z-index: 1; /* Detrás del header fijo */
+}
+
+.hero-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(1px);
+  z-index: 2;
+}
+
+.hero-section > * {
+  position: relative;
+  z-index: 3;
 }
 
 .hero-content {
@@ -79,7 +107,8 @@
   color: white;
   margin-bottom: 16px;
   line-height: 1.2;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.9),
+               0 0 20px rgba(0, 0, 0, 0.7);
 }
 
 .highlight {
@@ -87,6 +116,26 @@
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  text-shadow: 0 0 8px rgba(0, 255, 136, 0.4),
+               0 0 16px rgba(0, 255, 136, 0.2),
+               0 0 24px rgba(0, 255, 136, 0.1);
+  filter: drop-shadow(0 0 5px rgba(0, 255, 136, 0.3));
+  animation: highlightGlow 3s ease-in-out infinite alternate;
+}
+
+@keyframes highlightGlow {
+  0% {
+    text-shadow: 0 0 8px rgba(0, 255, 136, 0.4),
+                 0 0 16px rgba(0, 255, 136, 0.2),
+                 0 0 24px rgba(0, 255, 136, 0.1);
+    filter: drop-shadow(0 0 5px rgba(0, 255, 136, 0.3));
+  }
+  100% {
+    text-shadow: 0 0 12px rgba(0, 255, 136, 0.5),
+                 0 0 20px rgba(0, 255, 136, 0.3),
+                 0 0 28px rgba(0, 255, 136, 0.15);
+    filter: drop-shadow(0 0 8px rgba(0, 255, 136, 0.4));
+  }
 }
 
 .hero-subtitle {
@@ -94,6 +143,7 @@
   color: #d1d5db;
   margin-bottom: 32px;
   line-height: 1.5;
+  text-shadow: 1px 1px 6px rgba(0, 0, 0, 0.8);
 }
 
 .hero-buttons {
@@ -146,41 +196,74 @@
 
 /* ===== FEATURES SECTION ===== */
 .features-section {
-  padding: 24px 0;
+  position: relative;
+  padding: 50px 20px;
+  /* Background image se aplica via inline style en el componente */
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  width: 100vw;
+  margin-left: calc(-50vw + 50%);
+  margin-top: 0;
+  margin-bottom: 0;
+  min-height: auto; /* Solo la altura del contenido */
+  overflow: hidden;
+}
+
+.features-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(2px);
+  z-index: 1;
+}
+
+.features-section > * {
+  position: relative;
+  z-index: 2;
 }
 
 .features-title {
-  font-size: 2rem;
+  font-size: 2.5rem;
   font-weight: bold;
   color: white;
   text-align: center;
-  margin-bottom: 32px;
-  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);
+  margin-bottom: 40px;
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.9),
+               0 0 20px rgba(0, 255, 136, 0.3);
 }
 
 .features-grid {
   display: grid;
   grid-template-columns: 1fr;
   gap: 20px;
-  max-width: 800px;
+  max-width: 1200px;
   margin: 0 auto;
+  padding: 0 20px;
 }
 
 .feature-card {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 16px;
-  padding: 24px;
+  background: rgba(0, 0, 0, 0.6);
+  border: 1px solid rgba(0, 255, 136, 0.3);
+  border-radius: 20px;
+  padding: 32px;
   text-align: center;
   transition: all 0.3s ease;
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(15px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
 }
 
 .feature-card:hover {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(0, 0, 0, 0.8);
   border-color: #00ff88;
-  transform: translateY(-5px);
-  box-shadow: 0 10px 30px rgba(0, 255, 136, 0.2);
+  transform: translateY(-8px);
+  box-shadow: 0 15px 40px rgba(0, 255, 136, 0.3),
+              0 0 30px rgba(0, 255, 136, 0.2);
 }
 
 .feature-icon {
@@ -189,44 +272,185 @@
 }
 
 .feature-title {
-  font-size: 1.25rem;
-  font-weight: 600;
+  font-size: 1.4rem;
+  font-weight: 700;
   color: white;
-  margin-bottom: 12px;
+  margin-bottom: 16px;
+  text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.8);
 }
 
 .feature-description {
-  color: #d1d5db;
-  font-size: 0.95rem;
-  line-height: 1.5;
+  color: #e5e7eb;
+  font-size: 1rem;
+  line-height: 1.6;
   margin: 0;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
 }
 
 /* ===== STATS SECTION ===== */
 .stats-section {
-  padding: 20px 0;
+  position: relative;
+  background: rgba(0, 0, 0, 0.8);
+  border-top: 1px solid rgba(0, 255, 136, 0.3);
+  border-bottom: 1px solid rgba(0, 255, 136, 0.3);
+  margin: 0; /* Sin margen para estar pegado */
+  padding: 40px 20px;
+  width: 100vw;
+  margin-left: calc(-50vw + 50%);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  overflow: hidden; /* Para ocultar partículas que salen del área */
+}
+
+/* ===== PARTÍCULAS ANIMADAS ===== */
+.stats-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 300%; /* Más ancho para movimiento continuo */
+  height: 100%;
+  background-image: 
+    radial-gradient(3px 3px at 17px 23px, rgba(0, 255, 136, 0.8), transparent),
+    radial-gradient(2px 2px at 43px 67px, rgba(0, 255, 136, 0.6), transparent),
+    radial-gradient(4px 4px at 89px 31px, rgba(0, 255, 136, 0.7), transparent),
+    radial-gradient(2px 2px at 127px 78px, rgba(0, 255, 136, 0.5), transparent),
+    radial-gradient(3px 3px at 156px 29px, rgba(0, 255, 136, 0.8), transparent),
+    radial-gradient(2px 2px at 189px 61px, rgba(0, 255, 136, 0.6), transparent),
+    radial-gradient(4px 4px at 213px 19px, rgba(0, 255, 136, 0.7), transparent),
+    radial-gradient(3px 3px at 251px 73px, rgba(0, 255, 136, 0.8), transparent),
+    radial-gradient(2px 2px at 289px 41px, rgba(0, 255, 136, 0.5), transparent),
+    radial-gradient(4px 4px at 317px 55px, rgba(0, 255, 136, 0.7), transparent);
+  background-repeat: repeat;
+  background-size: 350px 90px;
+  animation: moveParticles 25s linear infinite;
+  z-index: 1;
+}
+
+.stats-section::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 300%; /* Más ancho para movimiento continuo */
+  height: 100%;
+  background-image: 
+    radial-gradient(2px 2px at 31px 47px, rgba(30, 144, 255, 0.7), transparent),
+    radial-gradient(3px 3px at 71px 13px, rgba(30, 144, 255, 0.8), transparent),
+    radial-gradient(2px 2px at 113px 59px, rgba(30, 144, 255, 0.6), transparent),
+    radial-gradient(4px 4px at 151px 37px, rgba(30, 144, 255, 0.7), transparent),
+    radial-gradient(2px 2px at 193px 71px, rgba(30, 144, 255, 0.5), transparent),
+    radial-gradient(3px 3px at 227px 25px, rgba(30, 144, 255, 0.8), transparent),
+    radial-gradient(2px 2px at 263px 53px, rgba(30, 144, 255, 0.6), transparent),
+    radial-gradient(4px 4px at 291px 11px, rgba(30, 144, 255, 0.7), transparent),
+    radial-gradient(3px 3px at 329px 65px, rgba(30, 144, 255, 0.8), transparent);
+  background-repeat: repeat;
+  background-size: 370px 80px;
+  animation: moveParticles 30s linear infinite;
+  z-index: 1;
+}
+
+@keyframes moveParticles {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-66.67%); /* -200% de width original */
+  }
+}
+
+/* ===== PARTÍCULAS ADICIONALES (USANDO PSEUDO-ELEMENTOS EN STAT-ITEMS) ===== */
+
+/* Partículas dentro de stat-items removidas para mantener tarjetas limpias */
+
+/* ===== RESPONSIVE PARTICLES ===== */
+@media (max-width: 767px) {
+  .stats-section::before {
+    animation-duration: 20s; /* Velocidad reducida para móvil */
+  }
+  
+  .stats-section::after {
+    animation-duration: 25s; /* Velocidad reducida para móvil */
+  }
+  
+  .stats-grid::before {
+    animation-duration: 15s; /* Velocidad reducida para móvil */
+  }
+}
+
+/* ===== TERCERA CAPA DE PARTÍCULAS (BRILLOS) ===== */
+.stats-section {
+  position: relative;
+}
+
+.stats-section::after {
+  animation-delay: -5s; /* Desfase para evitar sincronización */
+}
+
+/* Agregar partículas de brillo usando JavaScript simulado con CSS */
+.stats-grid::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 400%;
+  height: 100%;
+  background-image: 
+    radial-gradient(1px 1px at 29px 17px, rgba(255, 255, 255, 0.8), transparent),
+    radial-gradient(2px 2px at 73px 43px, rgba(255, 255, 255, 0.6), transparent),
+    radial-gradient(1px 1px at 119px 63px, rgba(255, 255, 255, 0.9), transparent),
+    radial-gradient(2px 2px at 167px 21px, rgba(255, 255, 255, 0.7), transparent),
+    radial-gradient(1px 1px at 211px 51px, rgba(255, 255, 255, 0.8), transparent),
+    radial-gradient(2px 2px at 259px 37px, rgba(255, 255, 255, 0.6), transparent);
+  background-repeat: repeat;
+  background-size: 300px 80px;
+  animation: moveParticlesBright 20s linear infinite;
+  z-index: 1;
+  pointer-events: none;
+}
+
+@keyframes moveParticlesBright {
+  0% {
+    transform: translateX(0%);
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.3;
+  }
+  100% {
+    transform: translateX(-75%);
+    opacity: 1;
+  }
 }
 
 .stats-grid {
+  position: relative;
+  z-index: 3; /* Por encima de todas las partículas */
   display: grid;
   grid-template-columns: 1fr;
   gap: 24px;
-  max-width: 600px;
+  max-width: 1200px;
   margin: 0 auto;
+  padding: 0 20px;
 }
 
 .stat-item {
-  background: rgba(0, 255, 136, 0.1);
-  border: 1px solid rgba(0, 255, 136, 0.2);
+  position: relative;
+  background: rgba(0, 255, 136, 0.05);
+  border: 1px solid rgba(0, 255, 136, 0.3);
   border-radius: 16px;
-  padding: 24px;
+  padding: 32px 24px;
   text-align: center;
   transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  /* overflow removido para mantener tarjetas limpias sin partículas */
 }
 
 .stat-item:hover {
   background: rgba(0, 255, 136, 0.15);
-  transform: translateY(-3px);
+  border-color: rgba(0, 255, 136, 0.5);
+  transform: translateY(-5px);
+  box-shadow: 0 8px 30px rgba(0, 255, 136, 0.2);
 }
 
 .stat-number {
@@ -277,12 +501,29 @@
     justify-content: center;
   }
   
+  .features-section {
+    padding: 60px 40px;
+    background-attachment: scroll; /* Mejor para móviles */
+    min-height: auto; /* Solo altura del contenido */
+  }
+  
+  .features-title {
+    font-size: 2.8rem;
+  }
+  
   .features-grid {
     grid-template-columns: repeat(2, 1fr);
+    gap: 25px;
+    padding: 0 40px;
+  }
+  
+  .stats-section {
+    padding: 50px 40px;
   }
   
   .stats-grid {
     grid-template-columns: repeat(3, 1fr);
+    padding: 0 40px;
   }
 }
 
@@ -292,9 +533,15 @@
   }
   
   .home-content {
-    padding: 24px;
-    padding-top: 100px; /* Compensar header más alto en tablet */
-    gap: 24px;
+    padding: 0; /* Sin padding para permitir full-width */
+    padding-top: 0; /* Sin padding top para que hero llegue hasta arriba */
+    gap: 0; /* Sin gaps para evitar espacios */
+  }
+  
+  .hero-section {
+    padding: 100px 24px 24px 24px; /* Compensar header más alto en tablet */
+    background-attachment: scroll; /* Mejor para móviles */
+    min-height: 100vh;
   }
   
   .hero-title {
@@ -314,9 +561,14 @@
 /* ===== RESPONSIVE - DESKTOP ===== */
 @media (min-width: 1024px) {
   .home-content {
-    padding: 32px;
-    padding-top: 120px; /* Compensar header más alto en desktop */
-    gap: 32px;
+    padding: 0; /* Sin padding para permitir full-width */
+    padding-top: 0; /* Sin padding top para que hero llegue hasta arriba */
+    gap: 0; /* Sin gaps para evitar espacios */
+  }
+  
+  .hero-section {
+    padding: 120px 32px 32px 32px; /* Compensar header más alto en desktop */
+    min-height: 100vh;
   }
   
   .hero-title {
@@ -353,8 +605,8 @@
   }
   
   .hero-section {
-    min-height: 40vh;
-    padding: 16px 0;
+    min-height: 100vh;
+    padding: 60px 16px 16px 16px; /* Padding reducido para landscape */
   }
   
   .hero-title {
@@ -366,11 +618,26 @@
   }
   
   .features-section {
-    padding: 24px 0;
+    padding: 70px 60px;
+    min-height: auto; /* Solo altura del contenido */
+  }
+  
+  .features-title {
+    font-size: 3rem;
+  }
+  
+  .features-grid {
+    gap: 30px;
+    max-width: 1200px;
+    padding: 0 60px;
   }
   
   .stats-section {
-    padding: 24px 0;
+    padding: 60px 60px;
+  }
+  
+  .stats-grid {
+    padding: 0 60px;
   }
   
 

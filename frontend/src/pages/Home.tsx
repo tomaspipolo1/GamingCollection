@@ -15,8 +15,13 @@ const Home: React.FC = () => {
       {/* ===== CONTENIDO PRINCIPAL ===== */}
       <div className="home-content">
         
-                     {/* ===== HERO SECTION ===== */}
-             <div className="hero-section">
+                             {/* ===== HERO SECTION ===== */}
+        <div 
+          className="hero-section"
+          style={{
+            backgroundImage: `url('${process.env.PUBLIC_URL}/images/backgrounds/bg-1.jpg')`
+          }}
+        >
                <div className="hero-content">
                  <img 
                    src="/images/logos/logo-joystick.png" 
@@ -61,7 +66,12 @@ const Home: React.FC = () => {
         </div>
 
         {/* ===== FEATURES SECTION ===== */}
-        <div className="features-section">
+        <div 
+          className="features-section"
+          style={{
+            backgroundImage: `url('${process.env.PUBLIC_URL}/images/backgrounds/background-2.jpg')`
+          }}
+        >
           <h2 className="features-title">¿Qué puedes hacer?</h2>
           <div className="features-grid">
             
