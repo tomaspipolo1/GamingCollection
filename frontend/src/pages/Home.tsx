@@ -15,13 +15,17 @@ const Home: React.FC = () => {
       {/* ===== CONTENIDO PRINCIPAL ===== */}
       <div className="home-content">
         
-        {/* ===== HERO SECTION ===== */}
-        <div className="hero-section">
-          <div className="hero-content">
-            <div className="hero-icon">🎮</div>
-            <h1 className="hero-title">
-              Bienvenido a <span className="highlight">Gaming Collection</span>
-            </h1>
+                     {/* ===== HERO SECTION ===== */}
+             <div className="hero-section">
+               <div className="hero-content">
+                 <img 
+                   src="/images/logos/logo-joystick.png" 
+                   alt="Gaming Collection Logo" 
+                   className="hero-icon"
+                 />
+                 <h1 className="hero-title">
+                   Bienvenido a <span className="highlight">Gaming Collection</span>
+                 </h1>
             <p className="hero-subtitle">
               Tu plataforma definitiva para gestionar tu colección de videojuegos
             </p>

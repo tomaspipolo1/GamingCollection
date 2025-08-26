@@ -29,7 +29,35 @@
 }
 
 .footer-logo-icon {
-  font-size: 20px;
+  width: 50px;
+  height: 50px;
+  object-fit: contain;
+  filter: drop-shadow(0 0 2px rgba(138, 43, 226, 0.4))
+          drop-shadow(0 0 4px rgba(30, 144, 255, 0.3))
+          drop-shadow(0 0 6px rgba(0, 255, 127, 0.2));
+  transition: all 0.3s ease;
+  animation: footerGlow 5s ease-in-out infinite alternate;
+}
+
+.footer-logo-icon:hover {
+  filter: drop-shadow(0 0 3px rgba(138, 43, 226, 0.6))
+          drop-shadow(0 0 6px rgba(30, 144, 255, 0.5))
+          drop-shadow(0 0 9px rgba(0, 255, 127, 0.4))
+          drop-shadow(0 0 12px rgba(148, 0, 211, 0.3));
+  transform: scale(1.03);
+}
+
+@keyframes footerGlow {
+  0% {
+    filter: drop-shadow(0 0 2px rgba(138, 43, 226, 0.4))
+            drop-shadow(0 0 4px rgba(30, 144, 255, 0.3))
+            drop-shadow(0 0 6px rgba(0, 255, 127, 0.2));
+  }
+  100% {
+    filter: drop-shadow(0 0 3px rgba(138, 43, 226, 0.5))
+            drop-shadow(0 0 5px rgba(30, 144, 255, 0.4))
+            drop-shadow(0 0 7px rgba(0, 255, 127, 0.3));
+  }
 }
 
 .footer-logo-text {
@@ -109,7 +137,15 @@
   }
   
   .footer-logo-icon {
-    font-size: 24px;
+    width: 54px;
+    height: 54px;
+  }
+  
+  .footer-logo-icon:hover {
+    filter: drop-shadow(0 0 4px rgba(138, 43, 226, 0.7))
+            drop-shadow(0 0 7px rgba(30, 144, 255, 0.6))
+            drop-shadow(0 0 10px rgba(0, 255, 127, 0.5))
+            drop-shadow(0 0 13px rgba(148, 0, 211, 0.4));
   }
   
   .footer-logo-text {

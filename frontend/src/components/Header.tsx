@@ -21,7 +21,11 @@ const Header: React.FC = () => {
           
           {/* ===== LOGO (IZQUIERDA) ===== */}
           <div className="logo-section">
-            <span className="logo-icon">🎮</span>
+            <img 
+              src="/images/logos/logo-joystick.png" 
+              alt="Gaming Collection Logo" 
+              className="logo-icon"
+            />
             <h1 className="logo-text">Gaming Collection</h1>
           </div>
 

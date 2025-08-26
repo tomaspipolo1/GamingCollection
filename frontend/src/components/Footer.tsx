@@ -22,7 +22,11 @@ const Footer: React.FC = () => {
           
           {/* ===== LOGO Y INFO ===== */}
           <div className="footer-logo">
-            <span className="footer-logo-icon">🎮</span>
+            <img 
+              src="/images/logos/logo-joystick.png" 
+              alt="Gaming Collection Logo" 
+              className="footer-logo-icon"
+            />
             <div>
               <h3 className="footer-logo-text">Gaming Collection</h3>
               <p className="footer-subtitle">Proyecto Académico ADR {currentYear}</p>
