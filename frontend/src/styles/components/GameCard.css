@@ -1,0 +1,252 @@
+/* ===== GAME CARD STYLES ===== */
+
+.game-card {
+  background: linear-gradient(145deg, rgba(20, 20, 20, 0.9), rgba(40, 40, 40, 0.8));
+  border: 2px solid rgba(0, 255, 136, 0.2);
+  border-radius: 16px;
+  padding: 16px;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.game-card:hover {
+  transform: translateY(-8px);
+  border-color: rgba(0, 255, 136, 0.5);
+  box-shadow: 0 16px 48px rgba(0, 255, 136, 0.2);
+}
+
+/* Imagen del juego */
+.game-image-container {
+  position: relative;
+  width: 100%;
+  height: 200px;
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 16px;
+  background: linear-gradient(45deg, rgba(0, 0, 0, 0.6), rgba(0, 255, 136, 0.1));
+}
+
+.game-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.game-card:hover .game-image {
+  transform: scale(1.05);
+}
+
+.game-image-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 4rem;
+  color: rgba(0, 255, 136, 0.5);
+  background: linear-gradient(45deg, rgba(0, 0, 0, 0.8), rgba(0, 255, 136, 0.1));
+}
+
+.game-image-placeholder.hidden {
+  display: none;
+}
+
+/* Información del juego */
+.game-info {
+  flex: 1;
+}
+
+.game-title {
+  color: white;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin: 0 0 12px 0;
+  line-height: 1.3;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.game-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+
+.game-platform,
+.game-genre {
+  color: #d1d5db;
+  font-size: 0.85rem;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* Status del juego */
+.game-status {
+  display: inline-block;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 12px;
+  text-align: center;
+  min-width: 80px;
+}
+
+.status-played {
+  background: rgba(0, 255, 136, 0.2);
+  color: #00ff88;
+  border: 1px solid rgba(0, 255, 136, 0.4);
+  box-shadow: 0 0 10px rgba(0, 255, 136, 0.2);
+}
+
+.status-not-played {
+  background: rgba(59, 130, 246, 0.2);
+  color: #3b82f6;
+  border: 1px solid rgba(59, 130, 246, 0.4);
+  box-shadow: 0 0 10px rgba(59, 130, 246, 0.2);
+}
+
+.status-to-buy {
+  background: rgba(245, 158, 11, 0.2);
+  color: #f59e0b;
+  border: 1px solid rgba(245, 158, 11, 0.4);
+  box-shadow: 0 0 10px rgba(245, 158, 11, 0.2);
+}
+
+.status-default {
+  background: rgba(107, 114, 128, 0.2);
+  color: #6b7280;
+  border: 1px solid rgba(107, 114, 128, 0.4);
+}
+
+/* Precio */
+.game-price {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+  margin-bottom: 16px;
+}
+
+.price-amount {
+  color: #00ff88;
+  font-size: 1.2rem;
+  font-weight: 700;
+  text-shadow: 0 0 10px rgba(0, 255, 136, 0.3);
+}
+
+.price-currency {
+  color: #d1d5db;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+/* Acciones */
+.game-actions {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+}
+
+.btn-action {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+  padding: 8px;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-action:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateY(-2px);
+}
+
+.btn-action.edit {
+  color: #00d4aa;
+}
+
+.btn-action.delete {
+  color: #ff6b6b;
+}
+
+/* ===== RESPONSIVE DESIGN ===== */
+
+/* Móvil */
+@media (max-width: 768px) {
+  .game-card {
+    padding: 12px;
+  }
+  
+  .game-image-container {
+    height: 160px;
+    margin-bottom: 12px;
+  }
+  
+  .game-title {
+    font-size: 1rem;
+    margin-bottom: 8px;
+  }
+  
+  .game-meta {
+    margin-bottom: 8px;
+  }
+  
+  .game-status {
+    padding: 4px 8px;
+    font-size: 0.75rem;
+    margin-bottom: 8px;
+  }
+  
+  .price-amount {
+    font-size: 1.1rem;
+  }
+  
+  .game-actions {
+    gap: 6px;
+  }
+  
+  .btn-action {
+    padding: 6px;
+    font-size: 0.9rem;
+  }
+}
+
+/* Tablet */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .game-card {
+    padding: 14px;
+  }
+  
+  .game-image-container {
+    height: 180px;
+  }
+  
+  .game-title {
+    font-size: 1.05rem;
+  }
+}
+
+/* Desktop */
+@media (min-width: 1025px) {
+  .game-card {
+    padding: 16px;
+  }
+  
+  .game-image-container {
+    height: 200px;
+  }
+}

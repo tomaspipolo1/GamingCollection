@@ -33,11 +33,13 @@ export interface Game {
   currency: Currency;
   description?: string;
   releaseDate?: string;
-  imageUrl?: string;
+  image?: string;
+  imageUrl?: string; // URL completa para mostrar la imagen
   isActive: boolean;
   createdAt: string;
   updatedAt: string;
   formattedPrice: string;
+  hasImage?: boolean;
 }
 
 export interface GameInput {
@@ -49,7 +51,7 @@ export interface GameInput {
   currency?: Currency;
   description?: string;
   releaseDate?: string;
-  imageUrl?: string;
+  image?: string;
 }
 
 export interface GameUpdate {
@@ -61,7 +63,7 @@ export interface GameUpdate {
   currency?: Currency;
   description?: string;
   releaseDate?: string;
-  imageUrl?: string;
+  image?: string;
   isActive?: boolean;
 }
 
@@ -148,7 +150,7 @@ export interface GameFormData {
   currency: Currency;
   description?: string;
   releaseDate?: string;
-  imageUrl?: string;
+  image?: File; // Archivo de imagen para upload
 }
 
 // ===== TIPOS DE RESPUESTA API =====

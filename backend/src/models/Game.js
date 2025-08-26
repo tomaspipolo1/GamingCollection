@@ -25,10 +25,20 @@ const gameSchema = new mongoose.Schema({
     },
     
     // Género del juego (referencia al modelo Genre)
+    // Se debe seleccionar de los géneros activos existentes
     genre: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Genre',
-        required: [true, 'El género es obligatorio']
+        required: [true, 'El género es obligatorio'],
+        validate: {
+            validator: async function(v) {
+                // Verificar que el género existe y está activo
+                const Genre = mongoose.model('Genre');
+                const genreExists = await Genre.findOne({ _id: v, isActive: true });
+                return genreExists !== null;
+            },
+            message: 'El género seleccionado no existe o no está activo'
+        }
     },
     
     // Estado del juego
@@ -69,10 +79,12 @@ const gameSchema = new mongoose.Schema({
         type: Date
     },
     
-    // URL de imagen (opcional)
-    imageUrl: {
+    // Imagen del juego (opcional)
+    image: {
         type: String,
         trim: true
+        // El campo almacenará la ruta del archivo subido
+        // La validación se hará en el controlador al procesar el upload
     },
     
     // Estado activo/inactivo
@@ -92,6 +104,7 @@ gameSchema.index({ platform: 1 });
 gameSchema.index({ genre: 1 });
 gameSchema.index({ status: 1 });
 gameSchema.index({ isActive: 1 });
+gameSchema.index({ image: 1 });
 
 // Middleware para popular el género automáticamente
 gameSchema.pre(/^find/, function(next) {
@@ -128,6 +141,17 @@ gameSchema.methods.toJSON = function() {
     // Formatear el precio
     if (game.price) {
         game.formattedPrice = `${game.currency} ${game.price.toFixed(2)}`;
+    }
+    
+    // Agregar información de imagen si existe
+    if (game.image) {
+        game.hasImage = true;
+        // Construir URL completa de la imagen
+        game.imageUrl = `/uploads/games/${game.image}`;
+    } else {
+        game.hasImage = false;
+        game.image = null;
+        game.imageUrl = null;
     }
     
     return game;

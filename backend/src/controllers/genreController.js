@@ -60,6 +60,9 @@ const getAllGenres = async (req, res) => {
                 { description: searchRegex }
             ];
             console.log('🔍 Aplicando filtro de búsqueda:', searchRegex);
+            console.log('🔍 Filtro $or aplicado:', filter.$or);
+        } else {
+            console.log('🔍 No hay término de búsqueda, mostrando todos los géneros');
         }
         
         console.log('🎯 Filtro final aplicado:', filter);

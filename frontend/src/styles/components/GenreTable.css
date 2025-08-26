@@ -2,13 +2,47 @@
 
 .genre-table-container { 
   width: 100%; 
-  overflow-x: hidden; /* Prevenir scroll horizontal */
 }
 
 .genre-table-wrapper { 
   width: 100%; 
-  overflow-x: hidden; /* Prevenir scroll horizontal */
+  overflow-x: auto; /* Permitir scroll horizontal en móvil */
   -webkit-overflow-scrolling: touch; 
+  position: relative;
+  /* Estilo del scrollbar */
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0, 255, 136, 0.5) rgba(0, 0, 0, 0.3);
+}
+
+/* Estilo del scrollbar para WebKit (Chrome, Safari, Edge) */
+.genre-table-wrapper::-webkit-scrollbar {
+  height: 8px;
+}
+
+.genre-table-wrapper::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 4px;
+}
+
+.genre-table-wrapper::-webkit-scrollbar-thumb {
+  background: rgba(0, 255, 136, 0.5);
+  border-radius: 4px;
+}
+
+.genre-table-wrapper::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 255, 136, 0.7);
+}
+
+.scroll-hint {
+  display: none; /* Oculto por defecto */
+  text-align: center;
+  padding: 10px;
+  background: rgba(0, 255, 136, 0.15);
+  color: #00ff88;
+  font-size: 0.85rem;
+  font-weight: 500;
+  border-bottom: 2px solid rgba(0, 255, 136, 0.4);
+  text-shadow: 0 0 10px rgba(0, 255, 136, 0.3);
 }
 
 .genre-table { 
@@ -25,17 +59,17 @@
   box-shadow: none;
 }
 .genre-table thead { background: rgba(0,0,0,0.4); border-bottom: 2px solid rgba(0,255,136,0.3); }
-.genre-table th { padding: 16px 12px; text-align: left; color: #00ff88; font-weight: 600; font-size: 0.9rem; text-transform: uppercase; letter-spacing: .5px; white-space: nowrap; position: relative; }
+.genre-table th { padding: 12px 8px; text-align: left; color: #00ff88; font-weight: 600; font-size: 0.9rem; text-transform: uppercase; letter-spacing: .5px; white-space: nowrap; position: relative; }
 
-.th-name { min-width: 220px; }
-.th-description { min-width: 260px; }
-.th-status { min-width: 120px; }
-.th-actions { min-width: 120px; }
+.th-name { min-width: 150px; }
+.th-description { min-width: 200px; }
+.th-status { min-width: 100px; }
+.th-actions { min-width: 100px; }
 
-.genre-table tbody tr { border-bottom: 1px solid rgba(255,255,255,0.1); transition: all .3s ease; }
-.genre-row:hover { background: rgba(0,255,136,0.05); transform: scale(1.01); box-shadow: 0 4px 20px rgba(0,255,136,0.1); }
+.genre-table tbody tr { border-bottom: 1px solid rgba(255,255,255,0.1); transition: background-color .2s ease, box-shadow .2s ease; }
+.genre-row:hover { background: rgba(0,255,136,0.05); box-shadow: 0 4px 20px rgba(0,255,136,0.1); }
 
-.td-name, .td-description, .td-status, .td-actions { padding: 16px 12px; color: white; }
+.td-name, .td-description, .td-status, .td-actions { padding: 12px 8px; color: white; }
 
 .genre-status { padding: 6px 10px; border-radius: 999px; font-size: .85rem; font-weight: 600; }
 .genre-status.active { background: rgba(0,255,136,0.15); color: #00ff88; border: 1px solid rgba(0,255,136,0.3); box-shadow: 0 0 10px rgba(0,255,136,0.2); }
@@ -51,5 +85,56 @@
 .empty-genres-content { text-align:center; max-width:400px; }
 .empty-title { color:white; font-size:1.5rem; font-weight:600; margin:0 0 12px 0; }
 .empty-message { color:#d1d5db; font-size:1rem; margin:0; line-height:1.5; }
+
+/* ===== RESPONSIVE DESIGN ===== */
+
+/* Móvil - Vista de tarjetas */
+@media (max-width: 768px) {
+  .genre-table-container {
+    overflow-x: auto;
+  }
+  
+  .genre-table-wrapper {
+    min-width: 600px; /* Forzar ancho mínimo para scroll */
+  }
+  
+  .scroll-hint {
+    display: block; /* Mostrar solo en móvil */
+  }
+  
+  .genre-table th,
+  .genre-table td {
+    padding: 8px 6px;
+    font-size: 0.85rem;
+  }
+  
+  .th-name { min-width: 120px; }
+  .th-description { min-width: 160px; }
+  .th-status { min-width: 80px; }
+  .th-actions { min-width: 80px; }
+  
+  .genre-status {
+    padding: 4px 8px;
+    font-size: 0.8rem;
+  }
+  
+  .btn-action {
+    font-size: 0.9rem;
+    margin-right: 4px;
+  }
+}
+
+/* Tablet */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .genre-table th,
+  .genre-table td {
+    padding: 10px 8px;
+  }
+  
+  .th-name { min-width: 140px; }
+  .th-description { min-width: 180px; }
+  .th-status { min-width: 90px; }
+  .th-actions { min-width: 90px; }
+}
 
 

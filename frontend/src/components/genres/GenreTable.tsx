@@ -32,6 +32,7 @@ const GenreTable: React.FC<GenreTableProps> = ({ genres, onEdit, onDelete }) => 
   return (
     <div className="genre-table-container">
       <div className="genre-table-wrapper">
+        <div className="scroll-hint">← Desliza horizontalmente para ver todas las columnas →</div>
         <table className="genre-table">
           <thead>
             <tr>

@@ -172,6 +172,11 @@ const Genres: React.FC = () => {
               <option value="true">🟢 Solo Activos</option>
               <option value="false">🔴 Solo Inactivos</option>
             </select>
+            
+            {/* Connection Status */}
+            <div className="connection-status-container">
+              <ConnectionStatus />
+            </div>
           </div>
         </div>
 
@@ -241,10 +246,7 @@ const Genres: React.FC = () => {
 
       </div>
 
-      {/* ===== CONNECTION STATUS ===== */}
-      <div className="genres-connection-status">
-        <ConnectionStatus />
-      </div>
+
 
                       {/* ===== ADD GENRE MODAL ===== */}
        <AddGenreModal
