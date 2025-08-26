@@ -8,6 +8,7 @@ export { default as Select } from './Select';
 export { default as Card, CardHeader, CardTitle, CardDescription, CardActions } from './Card';
 export { default as Modal } from './Modal';
 export { default as Loading, ButtonLoading, InputLoading, PageLoading } from './Loading';
+export { default as ScrollToTop } from './ScrollToTop';
 
 // ===== TIPOS =====
 export type { ButtonProps } from './Button';

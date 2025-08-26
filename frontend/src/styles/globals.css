@@ -1,9 +1,5 @@
 /* ===== GAMING COLLECTION - ESTILOS GLOBALES ===== */
 
-@import 'tailwindcss/base';
-@import 'tailwindcss/components';
-@import 'tailwindcss/utilities';
-
 /* Importar SweetAlert2 y estilos gaming */
 @import 'sweetalert2/dist/sweetalert2.min.css';
 @import './sweetalert-gaming.css';

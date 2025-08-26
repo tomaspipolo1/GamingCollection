@@ -1,0 +1,172 @@
+/* ===== FOOTER STYLES - MOBILE FIRST ===== */
+
+.gaming-footer {
+  background-color: #000000;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  margin-top: auto;
+  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.5);
+}
+
+.footer-container {
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 16px;
+}
+
+.footer-content {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  text-align: center;
+}
+
+/* ===== LOGO SECTION ===== */
+.footer-logo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.footer-logo-icon {
+  font-size: 20px;
+}
+
+.footer-logo-text {
+  color: white;
+  font-weight: bold;
+  font-size: 16px;
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.footer-subtitle {
+  color: #d1d5db;
+  font-size: 12px;
+  margin: 0;
+}
+
+/* ===== TECH STACK ===== */
+.tech-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.tech-title {
+  color: #d1d5db;
+  font-size: 12px;
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.tech-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+}
+
+.tech-item {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: #d1d5db;
+  font-size: 11px;
+}
+
+.tech-icon {
+  font-size: 14px;
+}
+
+/* ===== COPYRIGHT ===== */
+.footer-copyright {
+  color: #9ca3af;
+  font-size: 11px;
+  margin: 0;
+  padding-top: 8px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* ===== RESPONSIVE - TABLET ===== */
+@media (min-width: 768px) {
+  .footer-container {
+    padding: 20px 24px;
+  }
+  
+  .footer-content {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    text-align: left;
+    gap: 24px;
+  }
+  
+  .footer-logo {
+    flex-direction: row;
+    gap: 12px;
+  }
+  
+  .footer-logo-icon {
+    font-size: 24px;
+  }
+  
+  .footer-logo-text {
+    font-size: 18px;
+  }
+  
+  .footer-subtitle {
+    font-size: 13px;
+  }
+  
+  .tech-stack {
+    flex-direction: row;
+    align-items: center;
+    gap: 16px;
+  }
+  
+  .tech-title {
+    font-size: 13px;
+    white-space: nowrap;
+  }
+  
+  .tech-list {
+    justify-content: flex-start;
+    gap: 16px;
+  }
+  
+  .tech-item {
+    font-size: 12px;
+  }
+  
+  .tech-icon {
+    font-size: 16px;
+  }
+  
+  .footer-copyright {
+    font-size: 12px;
+    border: none;
+    padding: 0;
+    text-align: right;
+  }
+}
+
+/* ===== RESPONSIVE - DESKTOP ===== */
+@media (min-width: 1024px) {
+  .footer-container {
+    padding: 24px 32px;
+  }
+  
+  .footer-content {
+    gap: 32px;
+  }
+  
+  .tech-stack {
+    gap: 20px;
+  }
+  
+  .tech-list {
+    gap: 20px;
+  }
+}

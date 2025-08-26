@@ -1,0 +1,109 @@
+/* ===== SCROLL TO TOP BUTTON STYLES ===== */
+
+.scroll-to-top-btn {
+  position: fixed;
+  bottom: 80px; /* Más arriba para no interferir con el footer */
+  right: 24px;
+  width: 56px;
+  height: 56px;
+  background: linear-gradient(45deg, #00ff88, #00d4aa);
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 20px rgba(0, 255, 136, 0.3);
+  transition: all 0.3s ease;
+  z-index: 1001; /* Por encima del header para máxima visibilidad */
+  animation: fadeInUp 0.3s ease;
+}
+
+.scroll-to-top-btn:hover {
+  transform: translateY(-3px) scale(1.1);
+  box-shadow: 0 8px 30px rgba(0, 255, 136, 0.5);
+  background: linear-gradient(45deg, #00d4aa, #00ff88);
+}
+
+.scroll-to-top-btn:active {
+  transform: translateY(-1px) scale(1.05);
+  box-shadow: 0 6px 25px rgba(0, 255, 136, 0.4);
+}
+
+.scroll-to-top-btn:focus {
+  outline: none;
+  box-shadow: 0 8px 30px rgba(0, 255, 136, 0.5), 0 0 0 3px rgba(0, 255, 136, 0.3);
+}
+
+.scroll-icon {
+  font-size: 24px;
+  font-weight: bold;
+  color: #1a1a2e;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ===== ANIMACIÓN DE ENTRADA ===== */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* ===== RESPONSIVE - MOBILE ===== */
+@media (max-width: 768px) {
+  .scroll-to-top-btn {
+    bottom: 70px; /* Ajustado para móvil también */
+    right: 20px;
+    width: 48px;
+    height: 48px;
+  }
+  
+  .scroll-icon {
+    font-size: 20px;
+  }
+}
+
+/* ===== LANDSCAPE MOBILE FIX ===== */
+@media (max-height: 500px) and (orientation: landscape) {
+  .scroll-to-top-btn {
+    bottom: 60px; /* Ajustado para landscape también */
+    right: 16px;
+    width: 44px;
+    height: 44px;
+  }
+  
+  .scroll-icon {
+    font-size: 18px;
+  }
+}
+
+/* ===== ACCESIBILIDAD ===== */
+@media (prefers-reduced-motion: reduce) {
+  .scroll-to-top-btn {
+    animation: none;
+    transition: none;
+  }
+  
+  .scroll-to-top-btn:hover {
+    transform: none;
+  }
+}
+
+/* ===== DARK MODE (si fuera necesario) ===== */
+@media (prefers-color-scheme: dark) {
+  .scroll-to-top-btn {
+    box-shadow: 0 4px 20px rgba(0, 255, 136, 0.4);
+  }
+  
+  .scroll-to-top-btn:hover {
+    box-shadow: 0 8px 30px rgba(0, 255, 136, 0.6);
+  }
+}

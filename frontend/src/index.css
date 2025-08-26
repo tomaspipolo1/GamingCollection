@@ -1,2 +1,6 @@
-/* Importar estilos gaming */
+/* ===== BOOTSTRAP ===== */
+@import 'bootstrap/dist/css/bootstrap.min.css';
+
+/* ===== ESTILOS PERSONALIZADOS ===== */
+@import './styles/responsive.css';
 @import './styles/globals.css';
