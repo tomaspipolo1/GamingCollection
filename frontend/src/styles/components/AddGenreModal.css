@@ -1,0 +1,147 @@
+/* ===== ADD GENRE MODAL STYLES ===== */
+
+.add-genre-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 20px;
+  animation: fadeIn 0.3s ease-out;
+}
+
+.add-genre-modal-content {
+  background: linear-gradient(135deg, rgba(26, 26, 46, 0.95), rgba(0, 0, 0, 0.95));
+  border: 1px solid rgba(0, 255, 136, 0.3);
+  border-radius: 16px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(20px);
+  width: 100%;
+  max-width: 600px;
+  max-height: 90vh;
+  overflow: hidden;
+  animation: slideIn 0.3s ease-out;
+  position: relative;
+}
+
+/* ===== HEADER DEL MODAL ===== */
+.modal-header {
+  display: flex;
+  justify-content: flex-end;
+  padding: 16px 20px 0 20px;
+}
+
+.btn-close {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #d1d5db;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.btn-close:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.3);
+  color: white;
+  transform: scale(1.1);
+}
+
+.btn-close:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ===== CUERPO DEL MODAL ===== */
+.modal-body {
+  padding: 0 20px 20px 20px;
+  overflow-y: auto;
+  max-height: calc(90vh - 80px);
+}
+
+/* ===== SCROLLBAR PERSONALIZADO ===== */
+.modal-body::-webkit-scrollbar {
+  width: 6px;
+}
+
+.modal-body::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 3px;
+}
+
+.modal-body::-webkit-scrollbar-thumb {
+  background: rgba(0, 255, 136, 0.3);
+  border-radius: 3px;
+}
+
+.modal-body::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 255, 136, 0.5);
+}
+
+/* ===== ANIMACIONES ===== */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  .add-genre-modal-overlay {
+    padding: 16px;
+  }
+  
+  .add-genre-modal-content {
+    max-width: 100%;
+    max-height: 95vh;
+  }
+  
+  .modal-body {
+    max-height: calc(95vh - 80px);
+  }
+}
+
+@media (max-width: 480px) {
+  .add-genre-modal-overlay {
+    padding: 12px;
+  }
+  
+  .add-genre-modal-content {
+    border-radius: 12px;
+  }
+  
+  .modal-header {
+    padding: 12px 16px 0 16px;
+  }
+  
+  .modal-body {
+    padding: 0 16px 16px 16px;
+  }
+}

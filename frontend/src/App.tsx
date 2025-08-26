@@ -1,13 +1,15 @@
 import React from 'react';
-import Home from './pages/Home';
-import { ScrollToTop } from './components/common';
+import { BrowserRouter as Router } from 'react-router-dom';
+import { MainLayout } from './layouts';
+import { AppRoutes } from './routes';
 
 function App() {
   return (
-    <div className="bg-gaming-gradient">
-      <Home />
-      <ScrollToTop />
-    </div>
+    <Router>
+      <MainLayout>
+        <AppRoutes />
+      </MainLayout>
+    </Router>
   );
 }
 

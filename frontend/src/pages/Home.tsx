@@ -1,17 +1,23 @@
 // ===== HOME PAGE =====
 
 import React from 'react';
-import Header from '../components/Header';
-import Footer from '../components/Footer';
+import { useNavigate } from 'react-router-dom';
 import '../styles/pages/Home.css';
 
 const Home: React.FC = () => {
+  const navigate = useNavigate();
+
+  const handleExploreGames = () => {
+    navigate('/games');
+  };
+
+  const handleAddGame = () => {
+    // TODO: Navigate to add game form when implemented
+    navigate('/games');
+  };
 
   return (
     <div className="home-container">
-      {/* ===== HEADER ===== */}
-      <Header />
-      
       {/* ===== CONTENIDO PRINCIPAL ===== */}
       <div className="home-content">
         
@@ -35,11 +41,11 @@ const Home: React.FC = () => {
               Tu plataforma definitiva para gestionar tu colección de videojuegos
             </p>
             <div className="hero-buttons">
-              <button className="btn-primary">
+              <button className="btn-primary" onClick={handleExploreGames}>
                 <span className="btn-icon">🎯</span>
                 Explorar Juegos
               </button>
-              <button className="btn-secondary">
+              <button className="btn-secondary" onClick={handleAddGame}>
                 <span className="btn-icon">➕</span>
                 Agregar Juego
               </button>
@@ -110,10 +116,7 @@ const Home: React.FC = () => {
           </div>
         </div>
 
-      </div>
-
-                {/* ===== FOOTER ===== */}
-          <Footer />
+            </div>
     </div>
   );
 };

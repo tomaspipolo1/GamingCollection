@@ -26,6 +26,12 @@ const genreSchema = new mongoose.Schema({
     isActive: {
         type: Boolean,
         default: true
+    },
+    
+    // Soft delete - fecha de eliminación
+    deletedAt: {
+        type: Date,
+        default: null
     }
 }, {
     // Opciones del esquema

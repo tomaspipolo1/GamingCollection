@@ -9,6 +9,7 @@ export { default as Card, CardHeader, CardTitle, CardDescription, CardActions } 
 export { default as Modal } from './Modal';
 export { default as Loading, ButtonLoading, InputLoading, PageLoading } from './Loading';
 export { default as ScrollToTop } from './ScrollToTop';
+export { default as ConnectionStatus } from './ConnectionStatus';
 
 // ===== TIPOS =====
 export type { ButtonProps } from './Button';

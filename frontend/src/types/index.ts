@@ -13,6 +13,7 @@ export interface Genre {
 export interface GenreInput {
   name: string;
   description?: string;
+  isActive?: boolean;
 }
 
 export interface GenreUpdate {
@@ -125,13 +126,60 @@ export interface GameFilters {
   page?: number;
   limit?: number;
   sort?: string;
+  sortBy?: string;
+  sortOrder?: 'asc' | 'desc';
 }
 
 export interface GenreFilters {
+  search?: string;
   active?: boolean;
+  page?: number;
+  limit?: number;
+  sort?: string;
 }
 
-// ===== TIPOS PARA FORMULARIOS =====
+// ===== TIPOS DE FORMULARIOS =====
+export interface GameFormData {
+  title: string;
+  platform: Platform;
+  genre: string;
+  status: GameStatus;
+  price: number;
+  currency: Currency;
+  description?: string;
+  releaseDate?: string;
+  imageUrl?: string;
+}
+
+// ===== TIPOS DE RESPUESTA API =====
+export interface GamesResponse {
+  games: Game[];
+  totalGames: number;
+  totalPages: number;
+  currentPage: number;
+  hasNextPage: boolean;
+  hasPrevPage: boolean;
+}
+
+export interface GenresResponse {
+  // Estructura nueva del backend
+  genres?: Genre[];
+  totalGenres?: number;
+  totalPages?: number;
+  currentPage?: number;
+  hasNextPage?: boolean;
+  hasPrevPage?: boolean;
+  
+  // Estructura antigua del backend (para compatibilidad)
+  data?: Genre[];
+  count?: number;
+  
+  // Campos comunes
+  success: boolean;
+  message: string;
+}
+
+// ===== TIPOS PARA VALIDACIÓN =====
 export interface FormErrors {
   [key: string]: string | undefined;
 }

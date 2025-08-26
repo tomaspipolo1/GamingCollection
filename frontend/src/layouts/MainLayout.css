@@ -1,0 +1,37 @@
+/* ===== MAIN LAYOUT STYLES ===== */
+
+.app-container {
+  min-height: 100vh;
+  width: 100%;
+  background: linear-gradient(180deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+  background-attachment: fixed;
+  background-size: cover;
+  background-repeat: no-repeat;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+}
+
+.main-content {
+  flex: 1;
+  width: 100%;
+  position: relative;
+  z-index: 1;
+  overflow-x: hidden;
+}
+
+
+
+/* ===== RESPONSIVE ADJUSTMENTS ===== */
+@media (min-width: 768px) {
+  .app-container {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+  }
+}
+
+/* ===== MOBILE LANDSCAPE FIX ===== */
+@media (max-height: 500px) and (orientation: landscape) {
+  .app-container {
+    background-attachment: scroll;
+  }
+}

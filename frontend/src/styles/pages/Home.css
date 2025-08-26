@@ -2,14 +2,10 @@
 
 .home-container {
   min-height: 100vh;
-  width: 100vw;
-  background: linear-gradient(180deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
-  background-attachment: fixed;
-  background-size: cover;
-  background-repeat: no-repeat;
+  width: 100%;
   display: flex;
   flex-direction: column;
-  overflow-x: hidden; /* Prevenir scroll horizontal global */
+  /* Background moved to MainLayout */
 }
 
 .home-content {
@@ -36,8 +32,9 @@
   background-position: center center;
   background-repeat: no-repeat;
   background-attachment: fixed;
-  width: 100vw;
+  width: 100%;
   margin-left: calc(-50vw + 50%);
+  box-sizing: border-box;
   overflow: hidden;
   z-index: 1; /* Detrás del header fijo */
 }
@@ -203,8 +200,9 @@
   background-position: center center;
   background-repeat: no-repeat;
   background-attachment: fixed;
-  width: 100vw;
+  width: 100%;
   margin-left: calc(-50vw + 50%);
+  box-sizing: border-box;
   margin-top: 0;
   margin-bottom: 0;
   min-height: auto; /* Solo la altura del contenido */
@@ -295,8 +293,9 @@
   border-bottom: 1px solid rgba(0, 255, 136, 0.3);
   margin: 0; /* Sin margen para estar pegado */
   padding: 40px 20px;
-  width: 100vw;
+  width: 100%;
   margin-left: calc(-50vw + 50%);
+  box-sizing: border-box;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
   overflow: hidden; /* Para ocultar partículas que salen del área */
 }
@@ -528,9 +527,7 @@
 }
 
 @media (min-width: 768px) {
-  .home-container {
-    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
-  }
+  /* Background moved to MainLayout */
   
   .home-content {
     padding: 0; /* Sin padding para permitir full-width */
@@ -600,9 +597,7 @@
 
 /* ===== LANDSCAPE MOBILE FIX ===== */
 @media (max-height: 500px) and (orientation: landscape) {
-  .home-container {
-    background-attachment: scroll;
-  }
+  /* Background moved to MainLayout */
   
   .hero-section {
     min-height: 100vh;

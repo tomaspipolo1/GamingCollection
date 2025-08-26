@@ -1,0 +1,83 @@
+/* ===== EDIT GENRE MODAL STYLES ===== */
+
+.edit-genre-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 20px;
+}
+
+.edit-genre-modal-content {
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.9), rgba(20, 20, 20, 0.95));
+  border: 2px solid rgba(0, 212, 170, 0.3);
+  border-radius: 16px;
+  box-shadow: 0 20px 60px rgba(0, 212, 170, 0.2);
+  max-width: 600px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+}
+
+/* Header del modal */
+.modal-header {
+  display: flex;
+  justify-content: flex-end;
+  padding: 20px 20px 0 20px;
+}
+
+.btn-close {
+  background: transparent;
+  border: none;
+  color: #00d4aa;
+  font-size: 24px;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+}
+
+.btn-close:hover {
+  background: rgba(0, 212, 170, 0.1);
+  color: #00ff88;
+  transform: scale(1.1);
+}
+
+.btn-close:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Cuerpo del modal */
+.modal-body {
+  padding: 0 20px 20px 20px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .edit-genre-modal-content {
+    margin: 10px;
+    max-height: 95vh;
+  }
+  
+  .modal-header {
+    padding: 15px 15px 0 15px;
+  }
+  
+  .modal-body {
+    padding: 0 15px 15px 15px;
+  }
+}

@@ -41,6 +41,12 @@
   display: flex;
   align-items: center;
   gap: 8px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.logo-section:hover {
+  transform: scale(1.02);
 }
 
 .logo-icon {
@@ -149,6 +155,25 @@
   display: block;
   text-align: center;
   text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);
+  position: relative;
+}
+
+.nav-link.active {
+  color: #00ff88;
+  /* Removed background, border, and box-shadow to keep only the underline */
+}
+
+.nav-link.active::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 30px;
+  height: 3px;
+  background: linear-gradient(45deg, #00ff88, #00d4aa);
+  border-radius: 2px;
+  box-shadow: 0 0 8px rgba(0, 255, 136, 0.4);
 }
 
 .nav-link:hover {

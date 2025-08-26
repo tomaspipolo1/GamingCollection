@@ -1,20 +1,194 @@
-// ===== GAMES PAGE COMPONENT =====
+// ===== GAMES PAGE =====
 
-import React from 'react';
+import React, { useState } from 'react';
+import Swal from 'sweetalert2';
+import GameTable from '../../components/games/GameTable';
+import DeleteModal from '../../components/games/DeleteModal';
+import { ConnectionStatus } from '../../components/common';
+import { useGames } from '../../hooks/useGames';
+import { Game } from '../../types';
+import '../../styles/pages/Games.css';
 
-const GamesPage: React.FC = () => {
+const Games: React.FC = () => {
+  const { 
+    games, 
+    loading, 
+    error, 
+    searchTerm, 
+    setSearchTerm,
+    deleteGame,
+    currentPage,
+    totalPages,
+    setCurrentPage
+  } = useGames();
+
+  const [gameToDelete, setGameToDelete] = useState<Game | null>(null);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+
+  // Handle delete confirmation
+  const handleDeleteClick = (game: Game) => {
+    setGameToDelete(game);
+    setShowDeleteModal(true);
+  };
+
+  // Handle confirmed delete
+  const handleConfirmDelete = async () => {
+    if (gameToDelete) {
+      try {
+        await deleteGame(gameToDelete._id);
+        
+        // Mostrar mensaje de éxito
+        Swal.fire({
+          icon: 'success',
+          title: '¡Juego eliminado!',
+          text: `El juego "${gameToDelete.title}" ha sido eliminado correctamente`,
+          confirmButtonColor: '#00ff88',
+          confirmButtonText: 'Entendido'
+        });
+        
+        setShowDeleteModal(false);
+        setGameToDelete(null);
+      } catch (error: any) {
+        // Mostrar mensaje de error
+        Swal.fire({
+          icon: 'error',
+          title: 'Error al eliminar',
+          text: error?.response?.data?.message || 'Ha ocurrido un error al eliminar el juego',
+          confirmButtonColor: '#00ff88',
+          confirmButtonText: 'Entendido'
+        });
+      }
+    }
+  };
+
+  // Handle cancel delete
+  const handleCancelDelete = () => {
+    setShowDeleteModal(false);
+    setGameToDelete(null);
+  };
+
+  // Handle edit (navigate to edit form - to implement later)
+  const handleEditClick = (game: Game) => {
+    console.log('Edit game:', game);
+    // TODO: Navigate to edit form
+  };
+
+  // Handle add new game
+  const handleAddGame = () => {
+    console.log('Add new game');
+    // TODO: Navigate to add form
+  };
+
   return (
-    <div className="container-gaming py-16">
-      <div className="text-center">
-        <h1 className="heading-1 mb-6">
-          🎮 Listado de Juegos
-        </h1>
-        <p className="text-xl text-gray-300">
-          Página en construcción - Aquí irá el CRUD de videojuegos
-        </p>
+    <div className="games-container">
+      {/* ===== CONTENIDO PRINCIPAL ===== */}
+      <div className="games-content">
+        
+        {/* ===== TÍTULO Y BOTÓN AGREGAR ===== */}
+        <div className="games-header">
+          <div className="games-title-section">
+            <h1 className="games-title">
+              🎮 Colección de Videojuegos
+            </h1>
+            <p className="games-subtitle">
+              Gestiona la biblioteca gaming
+            </p>
+          </div>
+          <button 
+            className="btn-add-game"
+            onClick={handleAddGame}
+          >
+            <span className="btn-icon">➕</span>
+            Agregar Juego
+          </button>
+        </div>
+
+        {/* ===== BÚSQUEDA ===== */}
+        <div className="search-section">
+          <div className="search-container">
+            <span className="search-icon">🔍</span>
+            <input
+              type="text"
+              placeholder="Buscar juegos..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="search-input"
+            />
+          </div>
+        </div>
+
+        {/* ===== TABLA DE JUEGOS ===== */}
+        <div className="table-section">
+          {loading ? (
+            <div className="loading-container">
+              <div className="loading-spinner"></div>
+              <p>Cargando juegos...</p>
+            </div>
+          ) : error ? (
+            <div className="error-container">
+              <p className="error-message">❌ {error}</p>
+            </div>
+          ) : (
+            <GameTable 
+              games={games}
+              onEdit={handleEditClick}
+              onDelete={handleDeleteClick}
+            />
+          )}
+        </div>
+
+        {/* ===== PAGINACIÓN ===== */}
+        {!loading && !error && totalPages > 1 && (
+          <div className="pagination-section">
+            <div className="pagination-info">
+              Página {currentPage} de {totalPages}
+            </div>
+            <div className="pagination-controls">
+              <button 
+                className="pagination-btn"
+                onClick={() => setCurrentPage(currentPage - 1)}
+                disabled={currentPage === 1}
+              >
+                ◀
+              </button>
+              
+              {Array.from({ length: totalPages }, (_, i) => i + 1).map(page => (
+                <button
+                  key={page}
+                  className={`pagination-btn ${page === currentPage ? 'active' : ''}`}
+                  onClick={() => setCurrentPage(page)}
+                >
+                  {page}
+                </button>
+              ))}
+              
+              <button 
+                className="pagination-btn"
+                onClick={() => setCurrentPage(currentPage + 1)}
+                disabled={currentPage === totalPages}
+              >
+                ▶
+              </button>
+            </div>
+          </div>
+        )}
+
       </div>
+
+      {/* ===== CONNECTION STATUS ===== */}
+      <div className="games-connection-status">
+        <ConnectionStatus />
+      </div>
+
+      {/* ===== DELETE MODAL ===== */}
+      <DeleteModal 
+        isOpen={showDeleteModal}
+        game={gameToDelete}
+        onConfirm={handleConfirmDelete}
+        onCancel={handleCancelDelete}
+      />
     </div>
   );
 };
 
-export default GamesPage;
+export default Games;

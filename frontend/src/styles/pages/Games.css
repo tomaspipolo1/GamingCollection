@@ -1,0 +1,300 @@
+/* ===== GAMES PAGE STYLES - MOBILE FIRST ===== */
+
+.games-container {
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  /* Background moved to MainLayout */
+}
+
+.games-content {
+  flex: 1;
+  padding: 16px;
+  padding-top: 80px; /* Compensar altura del header fijo */
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  max-width: 1400px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* ===== HEADER SECTION ===== */
+.games-header {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+.games-title-section {
+  flex: 1;
+}
+
+.games-title {
+  font-size: 2rem;
+  font-weight: bold;
+  color: white;
+  margin: 0 0 8px 0;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+.games-subtitle {
+  font-size: 1rem;
+  color: #d1d5db;
+  margin: 0;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+}
+
+.btn-add-game {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 20px;
+  background: linear-gradient(45deg, #00ff88, #00d4aa);
+  color: #1a1a2e;
+  border: none;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 255, 136, 0.3);
+}
+
+.btn-add-game:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 255, 136, 0.4);
+}
+
+.btn-add-game .btn-icon {
+  font-size: 1.1rem;
+}
+
+/* ===== SEARCH SECTION ===== */
+.search-section {
+  width: 100%;
+}
+
+.search-container {
+  position: relative;
+  max-width: 500px;
+  width: 100%;
+}
+
+.search-icon {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.2rem;
+  color: #9ca3af;
+  z-index: 2;
+}
+
+.search-input {
+  width: 100%;
+  padding: 14px 16px 14px 48px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(0, 255, 136, 0.3);
+  border-radius: 12px;
+  color: white;
+  font-size: 1rem;
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+}
+
+.search-input::placeholder {
+  color: #9ca3af;
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: #00ff88;
+  box-shadow: 0 0 20px rgba(0, 255, 136, 0.3);
+  background: rgba(255, 255, 255, 0.15);
+}
+
+/* ===== TABLE SECTION ===== */
+.table-section {
+  width: 100%;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid rgba(0, 255, 136, 0.2);
+  backdrop-filter: blur(10px);
+}
+
+/* ===== LOADING STATE ===== */
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  color: white;
+}
+
+.loading-spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid rgba(0, 255, 136, 0.3);
+  border-top: 3px solid #00ff88;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 16px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* ===== ERROR STATE ===== */
+.error-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+}
+
+.error-message {
+  color: #ff6b6b;
+  font-size: 1.1rem;
+  text-align: center;
+  margin: 0;
+}
+
+/* ===== CONNECTION STATUS ===== */
+.games-connection-status {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  z-index: 100;
+}
+
+/* ===== PAGINATION ===== */
+.pagination-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  padding: 20px 0;
+}
+
+.pagination-info {
+  color: #d1d5db;
+  font-size: 0.9rem;
+}
+
+.pagination-controls {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.pagination-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(0, 255, 136, 0.3);
+  border-radius: 8px;
+  color: white;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.pagination-btn:hover:not(:disabled) {
+  background: rgba(0, 255, 136, 0.2);
+  border-color: #00ff88;
+  transform: translateY(-1px);
+}
+
+.pagination-btn.active {
+  background: linear-gradient(45deg, #00ff88, #00d4aa);
+  color: #1a1a2e;
+  font-weight: 600;
+}
+
+.pagination-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ===== RESPONSIVE - TABLET ===== */
+@media (min-width: 768px) {
+  .games-content {
+    padding: 24px;
+    padding-top: 100px;
+    gap: 32px;
+  }
+
+  .games-header {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+  }
+
+  .games-title {
+    font-size: 2.5rem;
+  }
+
+  .games-subtitle {
+    font-size: 1.1rem;
+  }
+
+  .btn-add-game {
+    padding: 14px 24px;
+    font-size: 1rem;
+  }
+
+  .search-container {
+    max-width: 600px;
+  }
+
+  .games-connection-status {
+    bottom: 30px;
+    right: 30px;
+  }
+
+  .pagination-section {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+}
+
+/* ===== RESPONSIVE - DESKTOP ===== */
+@media (min-width: 1024px) {
+  .games-content {
+    padding: 32px;
+    padding-top: 120px;
+    gap: 40px;
+  }
+
+  .games-title {
+    font-size: 3rem;
+  }
+
+  .games-subtitle {
+    font-size: 1.2rem;
+  }
+
+  .search-container {
+    max-width: 700px;
+  }
+}
+
+/* ===== LARGE DESKTOP ===== */
+@media (min-width: 1200px) {
+  .games-title {
+    font-size: 3.5rem;
+  }
+}

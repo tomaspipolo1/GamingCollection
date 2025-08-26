@@ -72,7 +72,8 @@ const {
     updateGenre,
     deleteGenre,
     permanentDeleteGenre,
-    getActiveGenres
+    getActiveGenres,
+    restoreGenre
 } = require('../controllers/genreController');
 
 // ===== RUTAS PÚBLICAS =====
@@ -295,6 +296,9 @@ router.post('/', createGenre);
  */
 router.put('/:id', updateGenre);
 router.delete('/:id', deleteGenre);
+
+// POST /api/genres/:id/restore - Restaurar género eliminado
+router.post('/:id/restore', restoreGenre);
 
 // DELETE /api/genres/:id/permanent - Eliminar permanentemente
 router.delete('/:id/permanent', permanentDeleteGenre);
