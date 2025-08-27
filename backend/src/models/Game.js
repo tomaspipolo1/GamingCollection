@@ -91,6 +91,12 @@ const gameSchema = new mongoose.Schema({
     isActive: {
         type: Boolean,
         default: true
+    },
+    
+    // Fecha de eliminación para soft delete
+    deletedAt: {
+        type: Date,
+        default: null
     }
 }, {
     // Opciones del esquema
@@ -105,9 +111,13 @@ gameSchema.index({ genre: 1 });
 gameSchema.index({ status: 1 });
 gameSchema.index({ isActive: 1 });
 gameSchema.index({ image: 1 });
+gameSchema.index({ deletedAt: 1 }); // Índice para soft delete
 
-// Middleware para popular el género automáticamente
+// Middleware para popular el género automáticamente y excluir soft deleted
 gameSchema.pre(/^find/, function(next) {
+    // Excluir juegos eliminados lógicamente
+    this.find({ deletedAt: null });
+    
     this.populate({
         path: 'genre',
         select: 'name description'
@@ -117,18 +127,43 @@ gameSchema.pre(/^find/, function(next) {
 
 // Métodos estáticos
 gameSchema.statics.getByStatus = function(status) {
-    return this.find({ status, isActive: true }).sort({ title: 1 });
+    return this.find({ status, isActive: true, deletedAt: null }).sort({ title: 1 });
 };
 
 gameSchema.statics.getByPlatform = function(platform) {
-    return this.find({ platform, isActive: true }).sort({ title: 1 });
+    return this.find({ platform, isActive: true, deletedAt: null }).sort({ title: 1 });
 };
 
 gameSchema.statics.searchByTitle = function(searchTerm) {
     return this.find({
         title: { $regex: searchTerm, $options: 'i' },
-        isActive: true
+        isActive: true,
+        deletedAt: null
     }).sort({ title: 1 });
+};
+
+// Método para soft delete
+gameSchema.statics.softDelete = function(gameId) {
+    return this.findByIdAndUpdate(
+        gameId,
+        { 
+            deletedAt: new Date(),
+            isActive: false 
+        },
+        { new: true }
+    );
+};
+
+// Método para restaurar juego eliminado
+gameSchema.statics.restore = function(gameId) {
+    return this.findByIdAndUpdate(
+        gameId,
+        { 
+            deletedAt: null,
+            isActive: true 
+        },
+        { new: true }
+    );
 };
 
 // Método para formatear la respuesta

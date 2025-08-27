@@ -4,7 +4,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { Game, GamesResponse, GameFilters } from '../types';
 import { gameService } from '../services/gameService';
 
-const GAMES_PER_PAGE = 10;
+const GAMES_PER_PAGE = 12;
 
 export const useGames = () => {
   // State
@@ -14,6 +14,7 @@ export const useGames = () => {
   
   // Filters and pagination
   const [searchTerm, setSearchTerm] = useState<string>('');
+  const [statusFilter, setStatusFilter] = useState<'all' | 'Sin Jugar' | 'Jugado' | 'Comprar'>('all');
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [totalPages, setTotalPages] = useState<number>(1);
   const [totalGames, setTotalGames] = useState<number>(0);
@@ -31,6 +32,11 @@ export const useGames = () => {
     return () => clearTimeout(timer);
   }, [searchTerm]);
 
+  // Reset to first page when status filter changes
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [statusFilter]);
+
   // Fetch games
   const fetchGames = useCallback(async () => {
     try {
@@ -41,6 +47,7 @@ export const useGames = () => {
         page: currentPage,
         limit: GAMES_PER_PAGE,
         search: debouncedSearchTerm || undefined,
+        status: statusFilter !== 'all' ? statusFilter : undefined,
         sort: 'createdAt'
       };
 
@@ -73,7 +80,7 @@ export const useGames = () => {
     } finally {
       setLoading(false);
     }
-  }, [currentPage, debouncedSearchTerm]);
+  }, [currentPage, debouncedSearchTerm, statusFilter]);
 
   // Load games on component mount and when dependencies change
   useEffect(() => {
@@ -126,6 +133,10 @@ export const useGames = () => {
     // Search
     searchTerm,
     setSearchTerm,
+    
+    // Status Filter
+    statusFilter,
+    setStatusFilter,
     
     // Actions
     deleteGame,

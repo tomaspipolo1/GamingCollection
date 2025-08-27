@@ -1,22 +1,24 @@
-// ===== ADD GAME MODAL COMPONENT =====
+// ===== EDIT GAME MODAL COMPONENT =====
 
 import React, { useEffect } from 'react';
 import ReactDOM from 'react-dom';
-import { GameInput } from '../../types';
+import { Game, GameInput } from '../../types';
 import { gameService } from '../../services/gameService';
 import GameForm from './GameForm';
 import Swal from 'sweetalert2';
 import '../../styles/components/AddGameModal.css';
 
-interface AddGameModalProps {
+interface EditGameModalProps {
   isOpen: boolean;
+  game: Game | null;
   onClose: () => void;
   onSuccess?: () => void;
   onRefresh?: () => void;
 }
 
-const AddGameModal: React.FC<AddGameModalProps> = ({ 
+const EditGameModal: React.FC<EditGameModalProps> = ({ 
   isOpen, 
+  game, 
   onClose, 
   onSuccess,
   onRefresh 
@@ -35,21 +37,25 @@ const AddGameModal: React.FC<AddGameModalProps> = ({
       document.documentElement.classList.remove('modal-open');
     };
   }, [isOpen]);
+
   // Manejar envío del formulario
   const handleSubmit = async (gameData: GameInput) => {
+    if (!game) return;
+    
     try {
-      console.log('🎮 Creando nuevo juego:', gameData);
+      console.log('🎮 Editando juego:', gameData);
+      console.log('🆔 ID del juego a editar:', game._id);
       
-      // Llamar al servicio para crear el juego
-      const response = await gameService.createGame(gameData);
+      // Llamar al servicio para actualizar el juego
+      const response = await gameService.updateGame(game._id, gameData);
       
-      console.log('✅ Juego creado exitosamente:', response);
+      console.log('✅ Juego actualizado exitosamente:', response);
       
       // Mostrar mensaje de éxito con z-index alto y cierre automático
       await Swal.fire({
         icon: 'success',
-        title: '¡Juego Creado! 🎮',
-        text: `"${gameData.title}" ha sido agregado a tu colección`,
+        title: '¡Juego Actualizado! 🎮',
+        text: `"${gameData.title}" ha sido actualizado correctamente`,
         confirmButtonText: '¡Genial!',
         confirmButtonColor: '#00ff88',
         background: '#1a1a2e',
@@ -70,10 +76,10 @@ const AddGameModal: React.FC<AddGameModalProps> = ({
       if (onRefresh) onRefresh();
       
     } catch (error: any) {
-      console.error('❌ Error creando juego:', error);
+      console.error('❌ Error actualizando juego:', error);
       
       // Extraer mensaje de error del backend o usar mensaje genérico
-      let errorMessage = 'No se pudo crear el juego';
+      let errorMessage = 'No se pudo actualizar el juego';
       
       if (error.response?.data?.message) {
         errorMessage = error.response.data.message;
@@ -86,7 +92,7 @@ const AddGameModal: React.FC<AddGameModalProps> = ({
       // Mostrar mensaje de error con z-index alto
       await Swal.fire({
         icon: 'error',
-        title: 'Error al Crear Juego',
+        title: 'Error al Actualizar Juego',
         text: errorMessage,
         confirmButtonText: 'Intentar de Nuevo',
         confirmButtonColor: '#ff6b6b',
@@ -99,8 +105,8 @@ const AddGameModal: React.FC<AddGameModalProps> = ({
     }
   };
 
-  // Si no está abierto, no renderizar nada
-  if (!isOpen) return null;
+  // Si no está abierto o no hay juego, no renderizar nada
+  if (!isOpen || !game) return null;
 
   const modal = (
     <div className="add-game-modal-overlay" role="dialog" aria-modal="true">
@@ -119,8 +125,10 @@ const AddGameModal: React.FC<AddGameModalProps> = ({
         {/* Cuerpo del modal */}
         <div className="modal-body">
           <GameForm 
+            initialData={game}
             onSubmit={handleSubmit}
             onCancel={onClose}
+            isEditMode={true}
           />
         </div>
       </div>
@@ -130,4 +138,4 @@ const AddGameModal: React.FC<AddGameModalProps> = ({
   return ReactDOM.createPortal(modal, document.body);
 };
 
-export default AddGameModal;
+export default EditGameModal;

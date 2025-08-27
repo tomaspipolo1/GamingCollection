@@ -1,6 +1,6 @@
 // ===== ADD GENRE MODAL =====
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Swal from 'sweetalert2';
 import GenreForm from './GenreForm';
 import { GenreInput } from '../../types';
@@ -22,6 +22,21 @@ const AddGenreModal: React.FC<AddGenreModalProps> = ({
 }) => {
   const [loading, setLoading] = useState(false);
 
+  // Lock background scroll when modal is open
+  useEffect(() => {
+    if (isOpen) {
+      document.body.classList.add('modal-open');
+      document.documentElement.classList.add('modal-open');
+    } else {
+      document.body.classList.remove('modal-open');
+      document.documentElement.classList.remove('modal-open');
+    }
+    return () => {
+      document.body.classList.remove('modal-open');
+      document.documentElement.classList.remove('modal-open');
+    };
+  }, [isOpen]);
+
   // Manejar envío del formulario
   const handleSubmit = async (data: GenreInput) => {
     try {
@@ -31,14 +46,23 @@ const AddGenreModal: React.FC<AddGenreModalProps> = ({
       
       const result = await genreService.createGenre(data);
       console.log('✅ Género creado exitosamente:', result);
+      const displayName = (result as any)?.name 
+        || (result as any)?.data?.name 
+        || (result as any)?.genre?.name 
+        || data.name;
       
-      // Mostrar mensaje de éxito con SweetAlert
+      // Mostrar éxito con estilo gaming y cierre automático
       await Swal.fire({
         icon: 'success',
-        title: '¡Género creado exitosamente!',
-        text: `El género "${result.name}" ha sido creado correctamente`,
+        title: '¡Género Creado! 🎭',
+        text: `"${displayName}" ha sido agregado a tu colección`,
+        background: '#1a1a2e',
+        color: 'white',
         confirmButtonColor: '#00ff88',
-        confirmButtonText: '¡Perfecto!'
+        customClass: { popup: 'swal2-above-modal' },
+        timer: 3000,
+        timerProgressBar: true,
+        showConfirmButton: false
       });
       
       // Cerrar modal y refrescar lista
@@ -59,13 +83,16 @@ const AddGenreModal: React.FC<AddGenreModalProps> = ({
         statusText: error?.response?.statusText
       });
       
-      // Mostrar mensaje de error con SweetAlert
+      // Error con estilo gaming (mantener botón)
       Swal.fire({
         icon: 'error',
         title: 'Error al crear el género',
         text: error?.response?.data?.message || error?.message || 'Ha ocurrido un error inesperado',
-        confirmButtonColor: '#00ff88',
-        confirmButtonText: 'Entendido'
+        background: '#1a1a2e',
+        color: 'white',
+        confirmButtonColor: '#ff6b6b',
+        confirmButtonText: 'Entendido',
+        customClass: { popup: 'swal2-above-modal' }
       });
     } finally {
       setLoading(false);

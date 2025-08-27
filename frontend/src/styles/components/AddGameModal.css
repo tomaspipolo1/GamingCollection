@@ -7,215 +7,155 @@
   right: 0;
   bottom: 0;
   background: rgba(0, 0, 0, 0.8);
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(8px);
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 1000;
   padding: 20px;
-  animation: fadeIn 0.3s ease-out;
 }
 
 .add-game-modal-content {
-  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-  border: 2px solid rgba(0, 255, 136, 0.3);
-  border-radius: 20px;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8), 0 0 40px rgba(0, 255, 136, 0.2);
-  width: 100%;
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.9), rgba(20, 20, 20, 0.95));
+  border: 2px solid rgba(0, 212, 170, 0.3);
+  border-radius: 16px;
+  box-shadow: 0 20px 60px rgba(0, 212, 170, 0.2);
   max-width: 700px;
+  width: 100%;
   max-height: 90vh;
-  overflow: hidden;
-  animation: slideUp 0.3s ease-out;
+  overflow-y: auto;
+  position: relative;
 }
 
-/* ===== MODAL HEADER ===== */
+/* Header del modal */
 .modal-header {
   display: flex;
+  justify-content: center;
   align-items: center;
-  justify-content: space-between;
-  padding: 12px 20px;
-  border-bottom: 1px solid rgba(0, 255, 136, 0.2);
-  background: rgba(0, 255, 136, 0.05);
+  padding: 26px 24px 6px 24px; /* más alto y con laterales amplios */
+  position: relative;
+  min-height: 56px; /* asegurar altura visible para el botón */
 }
 
-.modal-title {
-  color: white;
-  font-size: 1.5rem;
-  font-weight: 700;
-  margin: 0;
-  text-shadow: 0 0 20px rgba(0, 255, 136, 0.5);
+.modal-title-wrap {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
+}
+
+.modal-title-icon {
+  font-size: 22px;
+  filter: drop-shadow(0 0 8px rgba(0, 255, 136, 0.4));
+}
+
+.modal-title-text {
+  margin: 0;
+  color: #eafff7;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+}
+
+.modal-subtitle {
+  text-align: center;
+  color: #c7d2d6;
+  opacity: 0.9;
+  font-size: 0.95rem;
+  padding: 6px 20px 10px 20px;
 }
 
 .modal-close-btn {
-  background: rgba(255, 255, 255, 0.1);
-  border: 2px solid rgba(255, 255, 255, 0.3);
-  border-radius: 50%;
-  width: 40px;
-  height: 40px;
-  color: white;
-  font-size: 18px;
+  background: transparent;
+  border: none;
+  color: #00d4aa;
+  font-size: 26px; /* un poco más grande para mejor visibilidad */
   cursor: pointer;
+  padding: 8px;
+  border-radius: 8px;
   transition: all 0.3s ease;
-  backdrop-filter: blur(10px);
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 44px;
+  height: 44px;
+  position: absolute;
+  right: 20px;
 }
 
 .modal-close-btn:hover {
-  background: rgba(255, 107, 107, 0.2);
-  border-color: #ff6b6b;
+  background: rgba(0, 212, 170, 0.1);
+  color: #00ff88;
   transform: scale(1.1);
-  box-shadow: 0 0 20px rgba(255, 107, 107, 0.3);
 }
 
-/* ===== MODAL BODY ===== */
+/* Cuerpo del modal */
 .modal-body {
-  padding: 12px 20px;
-  overflow-y: auto;
-  max-height: calc(90vh - 80px); /* Ajustado para el nuevo padding más compacto */
+  padding: 0 20px 20px 20px;
 }
 
-/* ===== SCROLLBAR PERSONALIZADO ===== */
-.modal-body::-webkit-scrollbar {
-  width: 8px;
-}
-
-.modal-body::-webkit-scrollbar-track {
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 4px;
-}
-
-.modal-body::-webkit-scrollbar-thumb {
-  background: rgba(0, 255, 136, 0.5);
-  border-radius: 4px;
-}
-
-.modal-body::-webkit-scrollbar-thumb:hover {
-  background: rgba(0, 255, 136, 0.7);
-}
-
-/* ===== ANIMACIONES ===== */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-@keyframes slideUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px) scale(0.95);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
-}
-
-/* ===== RESPONSIVE DESIGN ===== */
-
-/* Móvil */
+/* Responsive */
 @media (max-width: 768px) {
-  .add-game-modal-overlay {
-    padding: 16px;
-  }
-  
   .add-game-modal-content {
+    margin: 10px;
     max-height: 95vh;
-    border-radius: 16px;
   }
   
   .modal-header {
-    padding: 20px 24px 16px;
-  }
-  
-  .modal-title {
-    font-size: 1.3rem;
-  }
-  
-  .modal-close-btn {
-    width: 36px;
-    height: 36px;
-    font-size: 16px;
+    padding: 15px 15px 0 15px;
   }
   
   .modal-body {
-    padding: 24px;
-    max-height: calc(95vh - 100px);
+    padding: 0 15px 15px 15px;
   }
 }
 
-/* Tablet */
-@media (min-width: 769px) and (max-width: 1024px) {
-  .add-game-modal-content {
-    max-width: 600px;
-  }
-  
-  .modal-header {
-    padding: 22px 28px 18px;
-  }
-  
-  .modal-body {
-    padding: 28px;
-  }
+/* ===== SWEETALERT ABOVE MODAL ===== */
+.swal2-above-modal {
+  z-index: 999999 !important; /* MUCHO más alto que el modal (100000) */
 }
 
-/* ===== ESTADOS ESPECIALES ===== */
-.add-game-modal-overlay.closing {
-  animation: fadeOut 0.2s ease-in forwards;
+/* Personalización adicional para SweetAlert por encima del modal */
+.swal2-above-modal .swal2-popup {
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%) !important;
+  border: 2px solid rgba(0, 255, 136, 0.5) !important;
+  border-radius: 20px !important;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.9), 0 0 40px rgba(0, 255, 136, 0.3) !important;
 }
 
-.add-game-modal-content.closing {
-  animation: slideDown 0.2s ease-in forwards;
+.swal2-above-modal .swal2-timer-progress-bar {
+  background: linear-gradient(90deg, #00ff88, #00d4aa) !important;
 }
 
-@keyframes fadeOut {
-  to {
-    opacity: 0;
-  }
+.swal2-above-modal .swal2-icon {
+  border-color: #00ff88 !important;
 }
 
-@keyframes slideDown {
-  to {
-    opacity: 0;
-    transform: translateY(30px) scale(0.95);
-  }
+.swal2-above-modal .swal2-icon.swal2-success {
+  border-color: #00ff88 !important;
 }
 
-/* ===== FOCUS VISIBLE ===== */
-.modal-close-btn:focus-visible {
-  outline: 2px solid #00ff88;
-  outline-offset: 2px;
+.swal2-above-modal .swal2-icon.swal2-success [class^='swal2-success-line'] {
+  background-color: #00ff88 !important;
 }
 
-/* ===== LOADING STATE ===== */
-.add-game-modal-content.loading {
-  pointer-events: none;
-  opacity: 0.8;
+.swal2-above-modal .swal2-icon.swal2-error {
+  border-color: #ff6b6b !important;
 }
 
-.add-game-modal-content.loading::after {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 40px;
-  height: 40px;
-  margin: -20px 0 0 -20px;
-  border: 3px solid rgba(0, 255, 136, 0.3);
-  border-top: 3px solid #00ff88;
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
+.swal2-above-modal .swal2-icon.swal2-error [class^='swal2-x-mark-line'] {
+  background-color: #ff6b6b !important;
 }
 
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+/* ===== SWEETALERT GLOBAL OVERRIDE ===== */
+/* Asegurar que SweetAlert esté por encima de TODO */
+.swal2-container {
+  z-index: 999999 !important;
+}
+
+.swal2-popup {
+  z-index: 1000000 !important;
+}
+
+/* Override específico para nuestro modal */
+.add-game-modal-overlay .swal2-container {
+  z-index: 999999 !important;
 }

@@ -9,6 +9,35 @@
   margin: 0 auto;
 }
 
+/* Título y subtítulo dentro del formulario (como en géneros) */
+.form-title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+.form-title-icon {
+  font-size: 22px;
+  filter: drop-shadow(0 0 8px rgba(0, 255, 136, 0.4));
+}
+
+.form-title-text {
+  margin: 0;
+  color: #eafff7;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+}
+
+.form-subtitle {
+  text-align: center;
+  color: #c7d2d6;
+  opacity: 0.9;
+  font-size: 0.95rem;
+  margin-bottom: 6px;
+}
+
 /* ===== FORM GROUPS ===== */
 .form-group {
   display: flex;
@@ -103,7 +132,12 @@
   display: flex;
   gap: 16px;
   justify-content: center;
-  margin-top: 12px;
+  margin-top: 8px; /* Reduce el espacio entre descripción y botones */
+}
+
+/* Reduce el espacio extra debajo del último form-group (Descripción) */
+.game-form .form-group:last-of-type {
+  margin-bottom: 0;
 }
 
 .btn-submit,

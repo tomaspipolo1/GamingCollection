@@ -165,6 +165,8 @@ const {
     createGame,
     updateGame,
     deleteGame,
+    softDeleteGame,
+    restoreGame,
     permanentDeleteGame,
     getGamesByStatus,
     getGamesByPlatform,
@@ -436,6 +438,12 @@ router.post('/', createGame);
  */
 router.put('/:id', updateGame);
 router.delete('/:id', deleteGame);
+
+// PATCH /api/games/:id/soft-delete - Soft delete de un juego
+router.patch('/:id/soft-delete', softDeleteGame);
+
+// PATCH /api/games/:id/restore - Restaurar un juego eliminado
+router.patch('/:id/restore', restoreGame);
 
 // DELETE /api/games/:id/permanent - Eliminar permanentemente
 router.delete('/:id/permanent', permanentDeleteGame);

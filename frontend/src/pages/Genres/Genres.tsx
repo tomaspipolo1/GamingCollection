@@ -3,7 +3,6 @@
 import React, { useState, useEffect } from 'react';
 import Swal from 'sweetalert2';
 import GenreTable from '../../components/genres/GenreTable';
-import DeleteGenreModal from '../../components/genres/DeleteModal';
 import AddGenreModal from '../../components/genres/AddGenreModal';
 import EditGenreModal from '../../components/genres/EditGenreModal';
 import { ConnectionStatus } from '../../components/common';
@@ -28,52 +27,68 @@ const Genres: React.FC = () => {
             fetchGenres
           } = useGenres();
 
-  const [genreToDelete, setGenreToDelete] = useState<Genre | null>(null);
   const [genreToEdit, setGenreToEdit] = useState<Genre | null>(null);
-  const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showAddModal, setShowAddModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
 
-  // Handle delete confirmation
-  const handleDeleteClick = (genre: Genre) => {
-    setGenreToDelete(genre);
-    setShowDeleteModal(true);
-  };
+  // Handle delete with SweetAlert confirmation
+  const handleDeleteClick = async (genre: Genre) => {
+    try {
+      const result = await Swal.fire({
+        title: '¿Estás seguro? 🗑️',
+        text: `¿Realmente quieres eliminar "${genre.name}"?`,
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#ff6b6b',
+        cancelButtonColor: '#6c757d',
+        confirmButtonText: 'Sí, eliminar',
+        cancelButtonText: 'Cancelar',
+        background: '#1a1a2e',
+        color: 'white',
+        customClass: { popup: 'swal2-above-modal' }
+      });
 
-  // Handle confirmed delete
-  const handleConfirmDelete = async () => {
-    if (genreToDelete) {
-      try {
-        await deleteGenre(genreToDelete._id);
-        
-        // Mostrar mensaje de éxito
+      if (result.isConfirmed) {
         Swal.fire({
+          title: 'Eliminando...',
+          text: 'Por favor espera',
+          allowOutsideClick: false,
+          didOpen: () => {
+            Swal.showLoading();
+          },
+          background: '#1a1a2e',
+          color: 'white'
+        });
+
+        await deleteGenre(genre._id);
+        
+        await Swal.fire({
           icon: 'success',
-          title: '¡Género eliminado!',
-          text: `El género "${genreToDelete.name}" ha sido eliminado correctamente`,
+          title: '¡Género Eliminado! 🏷️',
+          text: `"${genre.name}" ha sido eliminado de tu colección`,
+          confirmButtonText: '¡Entendido!',
           confirmButtonColor: '#00ff88',
-          confirmButtonText: 'Entendido'
+          background: '#1a1a2e',
+          color: 'white',
+          customClass: { popup: 'swal2-above-modal' }
         });
-        
-        setShowDeleteModal(false);
-        setGenreToDelete(null);
-      } catch (error: any) {
-        // Mostrar mensaje de error
-        Swal.fire({
-          icon: 'error',
-          title: 'Error al eliminar',
-          text: error?.response?.data?.message || 'Ha ocurrido un error al eliminar el género',
-          confirmButtonColor: '#00ff88',
-          confirmButtonText: 'Entendido'
-        });
-      }
-    }
-  };
 
-  // Handle cancel delete
-  const handleCancelDelete = () => {
-    setShowDeleteModal(false);
-    setGenreToDelete(null);
+        // Refresh genres list
+        fetchGenres();
+      }
+    } catch (error: any) {
+      console.error('Error durante la eliminación:', error);
+      
+      await Swal.fire({
+        icon: 'error',
+        title: 'Error al Eliminar',
+        text: 'No se pudo eliminar el género. Intenta de nuevo.',
+        confirmButtonText: 'Intentar de Nuevo',
+        confirmButtonColor: '#ff6b6b',
+        background: '#1a1a2e',
+        color: 'white'
+      });
+    }
   };
 
   // Handle add modal close
@@ -265,13 +280,7 @@ const Genres: React.FC = () => {
          onRefresh={fetchGenres}
        />
 
-       {/* ===== DELETE MODAL ===== */}
-       <DeleteGenreModal 
-         isOpen={showDeleteModal}
-         genre={genreToDelete}
-         onConfirm={handleConfirmDelete}
-         onCancel={handleCancelDelete}
-       />
+
     </div>
   );
 };

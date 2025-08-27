@@ -112,12 +112,15 @@ export const gameService = {
     }
   },
 
-  // Delete game
+  // Soft delete game
   async deleteGame(id: string): Promise<void> {
     try {
-      await api.delete(`/games/${id}`);
+      console.log('🗑️ GameService: Eliminando juego (soft delete):', id);
+      // Usar PATCH para soft delete en lugar de DELETE
+      await api.patch(`/games/${id}/soft-delete`);
+      console.log('✅ GameService: Juego eliminado exitosamente (soft delete)');
     } catch (error) {
-      console.error('Error deleting game:', error);
+      console.error('❌ GameService: Error eliminando juego:', error);
       throw new Error('Error al eliminar el juego');
     }
   },

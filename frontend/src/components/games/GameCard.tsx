@@ -11,6 +11,26 @@ interface GameCardProps {
 }
 
 const GameCard: React.FC<GameCardProps> = ({ game, onEdit, onDelete }) => {
+  // Función unificada para renderizar la sección de precio
+  const renderPriceSection = (price: number, currency?: string) => {
+    // Caso 1: Precio es 0 → Solo "Gratis"
+    if (price === 0) {
+      return (
+        <span className="price-amount">Gratis</span>
+      );
+    }
+    
+    // Caso 2: Precio > 0 → Precio + Moneda
+    return (
+      <>
+        <span className="price-amount">{price}</span>
+        {currency && (
+          <span className="price-currency">{currency}</span>
+        )}
+      </>
+    );
+  };
+
   // Función para obtener el color del status
   const getStatusColor = (status: string) => {
     switch (status.toLowerCase()) {
@@ -27,23 +47,72 @@ const GameCard: React.FC<GameCardProps> = ({ game, onEdit, onDelete }) => {
 
   // Función para obtener el icono de la plataforma
   const getPlatformIcon = (platform: string) => {
-    switch (platform.toLowerCase()) {
+    const platformLower = platform.toLowerCase();
+    
+    switch (platformLower) {
+      case 'steam':
+        return '/icons/steam.ico';
+      case 'epic games':
+        return '/icons/epic.ico';
+      case 'xbox game pass':
+        return '/icons/xbox.ico';
+      case 'ea play':
+        return '/icons/ea.ico';
+      case 'riot games':
+        return '/icons/riot.ico';
+      case 'ubisoft connect':
+        return '/icons/ubisoft.ico';
+      case 'battle.net':
+        return '🎮'; // Emoji para Battle.net (no tenemos icono)
+      case 'playstation store':
+        return '🎮'; // Emoji para PlayStation (no tenemos icono)
+      case 'nintendo eshop':
+        return '🎲'; // Emoji para Nintendo (no tenemos icono)
+      case 'gog':
+        return '🎮'; // Emoji para GOG (no tenemos icono)
+      case 'origin':
+        return '/icons/origin.ico';
+      case 'otros':
+        return '🎮'; // Emoji para Otros
+      // Casos adicionales para compatibilidad
+      case 'xbox':
+        return '/icons/xbox.ico';
+      case 'ubisoft':
+        return '/icons/ubisoft.ico';
+      case 'ea':
+      case 'electronic arts':
+        return '/icons/ea.ico';
+      case 'epic':
+        return '/icons/epic.ico';
+      case 'riot':
+        return '/icons/riot.ico';
       case 'pc':
-        return '💻';
+      case 'windows':
+        return '/icons/steam.ico'; // Steam como representante de PC
       case 'ps5':
       case 'playstation':
-        return '🎮';
-      case 'xbox':
-        return '🎯';
+      case 'ps4':
+        return '🎮'; // Emoji para PlayStation (no tenemos icono)
       case 'switch':
       case 'nintendo':
-        return '🎲';
+        return '🎲'; // Emoji para Nintendo (no tenemos icono)
       case 'mobile':
-        return '📱';
+        return '📱'; // Emoji para mobile
       default:
-        return '🎮';
+        return '🎮'; // Emoji por defecto
     }
   };
+
+  // Función para verificar si es un icono (string) o una imagen (import)
+  const isIconImage = (icon: string) => {
+    return icon.endsWith('.ico') || 
+           icon.endsWith('.png') ||
+           icon.endsWith('.jpg') ||
+           icon.endsWith('.jpeg') ||
+           icon.endsWith('.svg');
+  };
+
+  const platformIcon = getPlatformIcon(game.platform);
 
   return (
     <div className="game-card">
@@ -59,29 +128,33 @@ const GameCard: React.FC<GameCardProps> = ({ game, onEdit, onDelete }) => {
         {/* Título */}
         <h3 className="game-title">{game.title}</h3>
         
-                 {/* Plataforma y Género */}
-         <div className="game-meta">
-           <span className="game-platform">
-             {getPlatformIcon(game.platform)} {game.platform}
-           </span>
-           <span className="game-genre">
-             🏷️ {game.genre.name}
-           </span>
-         </div>
-        
-        {/* Status */}
-        <div className={`game-status ${getStatusColor(game.status)}`}>
-          {game.status}
+        {/* Plataforma y Género */}
+        <div className="game-meta">
+          <span className="game-platform">
+            {isIconImage(platformIcon) ? (
+              <img 
+                src={platformIcon} 
+                alt={`${game.platform} icon`} 
+                className="platform-icon"
+              />
+            ) : (
+              <span className="platform-emoji">{platformIcon}</span>
+            )}
+            {game.platform}
+          </span>
+          <span className="game-genre">
+            🏷️ {game.genre.name}
+          </span>
         </div>
         
-        {/* Precio y Moneda */}
-        <div className="game-price">
-          <span className="price-amount">
-            {game.price ? `${game.price}` : 'Gratis'}
-          </span>
-          {game.price && game.currency && (
-            <span className="price-currency">{game.currency}</span>
-          )}
+        {/* Status y Precio en la misma fila */}
+        <div className="game-status-price">
+          <div className={`game-status ${getStatusColor(game.status)}`}>
+            {game.status}
+          </div>
+          <div className="game-price">
+            {renderPriceSection(game.price, game.currency)}
+          </div>
         </div>
       </div>
 

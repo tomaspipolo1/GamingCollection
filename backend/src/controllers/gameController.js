@@ -59,7 +59,7 @@ const getAllGames = async (req, res) => {
             search,
             active,
             page = 1,
-            limit = 10,
+            limit = 12,
             sort = 'title'
         } = req.query;
         
@@ -70,6 +70,9 @@ const getAllGames = async (req, res) => {
         if (genre) filter.genre = genre;
         if (active !== undefined) filter.isActive = active === 'true';
         if (search) filter.title = { $regex: search, $options: 'i' };
+        
+        // IMPORTANTE: Filtrar solo juegos no eliminados lógicamente
+        filter.deletedAt = null;
         
         // Configurar paginación
         const pageNum = Math.max(1, parseInt(page));
@@ -87,6 +90,14 @@ const getAllGames = async (req, res) => {
             .limit(limitNum);
             
         const total = await Game.countDocuments(filter);
+        
+        // Debug logs para paginación
+        console.log('🔍 DEBUG PAGINACIÓN:');
+        console.log('  - Filtros aplicados:', filter);
+        console.log('  - Total de juegos:', total);
+        console.log('  - Límite por página:', limitNum);
+        console.log('  - Páginas calculadas:', Math.ceil(total / limitNum));
+        console.log('  - Página actual:', pageNum);
         
         res.json({
             success: true,
@@ -252,16 +263,46 @@ const deleteGame = async (req, res) => {
             });
         }
         
-        // Soft delete - cambiar isActive a false
-        const deletedGame = await Game.findByIdAndUpdate(
-            id,
-            { isActive: false },
-            { new: true }
-        );
+        // Soft delete usando el método del modelo
+        const deletedGame = await Game.softDelete(id);
         
         res.json({
             success: true,
             message: 'Juego eliminado exitosamente',
+            data: deletedGame
+        });
+    } catch (error) {
+        handleError(res, error, 'Error al eliminar el juego');
+    }
+};
+
+// PATCH /api/games/:id/soft-delete - Soft delete de un juego
+const softDeleteGame = async (req, res) => {
+    try {
+        const { id } = req.params;
+        
+        const game = await Game.findById(id);
+        if (!game) {
+            return res.status(404).json({
+                success: false,
+                message: 'Juego no encontrado'
+            });
+        }
+        
+        // Verificar si ya está eliminado
+        if (game.deletedAt) {
+            return res.status(400).json({
+                success: false,
+                message: 'El juego ya ha sido eliminado'
+            });
+        }
+        
+        // Soft delete usando el método del modelo
+        const deletedGame = await Game.softDelete(id);
+        
+        res.json({
+            success: true,
+            message: 'Juego eliminado exitosamente (soft delete)',
             data: deletedGame
         });
     } catch (error) {
@@ -355,6 +396,40 @@ const searchGames = async (req, res) => {
     }
 };
 
+// PATCH /api/games/:id/restore - Restaurar un juego eliminado
+const restoreGame = async (req, res) => {
+    try {
+        const { id } = req.params;
+        
+        const game = await Game.findById(id);
+        if (!game) {
+            return res.status(404).json({
+                success: false,
+                message: 'Juego no encontrado'
+            });
+        }
+        
+        // Verificar si no está eliminado
+        if (!game.deletedAt) {
+            return res.status(400).json({
+                success: false,
+                message: 'El juego no ha sido eliminado'
+            });
+        }
+        
+        // Restaurar usando el método del modelo
+        const restoredGame = await Game.restore(id);
+        
+        res.json({
+            success: true,
+            message: 'Juego restaurado exitosamente',
+            data: restoredGame
+        });
+    } catch (error) {
+        handleError(res, error, 'Error al restaurar el juego');
+    }
+};
+
 // ===== EXPORTAR FUNCIONES =====
 module.exports = {
     getAllGames,
@@ -362,6 +437,8 @@ module.exports = {
     createGame,
     updateGame,
     deleteGame,
+    softDeleteGame,
+    restoreGame,
     permanentDeleteGame,
     getGamesByStatus,
     getGamesByPlatform,

@@ -256,6 +256,20 @@
     max-width: 600px;
   }
 
+  .search-filters-section {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .filters-container {
+    gap: 20px;
+  }
+
+  .filter-select {
+    min-width: 200px;
+  }
+
   .games-connection-status {
     bottom: 30px;
     right: 30px;
@@ -293,4 +307,40 @@
   .games-title {
     font-size: 3.5rem;
   }
+}
+
+/* ===== SWEETALERT CUSTOM STYLES ===== */
+.swal2-custom-popup {
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%) !important;
+  border: 2px solid rgba(0, 255, 136, 0.3) !important;
+  border-radius: 20px !important;
+}
+
+.swal2-custom-confirm {
+  background: linear-gradient(45deg, #ff6b6b, #ee5a52) !important;
+  border: none !important;
+  border-radius: 8px !important;
+  padding: 12px 24px !important;
+  font-weight: 600 !important;
+  transition: all 0.3s ease !important;
+}
+
+.swal2-custom-confirm:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 8px 25px rgba(255, 107, 107, 0.4) !important;
+}
+
+.swal2-custom-cancel {
+  background: rgba(255, 255, 255, 0.1) !important;
+  border: 2px solid rgba(255, 255, 255, 0.3) !important;
+  border-radius: 8px !important;
+  padding: 12px 24px !important;
+  font-weight: 600 !important;
+  transition: all 0.3s ease !important;
+}
+
+.swal2-custom-cancel:hover {
+  background: rgba(255, 255, 255, 0.2) !important;
+  border-color: rgba(255, 255, 255, 0.5) !important;
+  transform: translateY(-1px) !important;
 }

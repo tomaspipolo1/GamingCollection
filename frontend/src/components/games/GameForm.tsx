@@ -133,6 +133,14 @@ const GameForm: React.FC<GameFormProps> = ({
 
   return (
     <form onSubmit={handleSubmit} className="game-form">
+      {/* Título del formulario */}
+      <div className="form-title">
+        <span className="form-title-icon">{isEditMode ? '✏️' : '➕'}</span>
+        <h2 className="form-title-text">{isEditMode ? 'Editar Juego' : 'Nuevo Juego'}</h2>
+      </div>
+      <div className="form-subtitle">
+        {isEditMode ? 'Modifica los datos del juego seleccionado' : 'Completa los datos para crear un nuevo juego'}
+      </div>
       {/* Título */}
       <div className="form-group">
         <label htmlFor="title" className="form-label">
