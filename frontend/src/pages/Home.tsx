@@ -2,10 +2,13 @@
 
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useHomeStats } from '../hooks/useHomeStats';
+import AnimatedCounter from '../components/common/AnimatedCounter';
 import '../styles/pages/Home.css';
 
 const Home: React.FC = () => {
   const navigate = useNavigate();
+  const { stats, loading, error } = useHomeStats();
 
   const handleExploreGames = () => {
     navigate('/games');
@@ -57,16 +60,40 @@ const Home: React.FC = () => {
         <div className="stats-section">
           <div className="stats-grid">
             <div className="stat-item">
-              <div className="stat-number">0</div>
-              <div className="stat-label">Juegos Registrados</div>
+              <div className="stat-number">
+                {loading ? (
+                  <span className="loading-skeleton">...</span>
+                ) : error ? (
+                  '—'
+                ) : (
+                  <AnimatedCounter target={stats.totalGames} duration={2000} />
+                )}
+              </div>
+              <div className="stat-label">🎮 Juegos Registrados</div>
             </div>
             <div className="stat-item">
-              <div className="stat-number">0</div>
-              <div className="stat-label">Géneros</div>
+              <div className="stat-number">
+                {loading ? (
+                  <span className="loading-skeleton">...</span>
+                ) : error ? (
+                  '—'
+                ) : (
+                  <AnimatedCounter target={stats.totalGenres} duration={2200} />
+                )}
+              </div>
+              <div className="stat-label">🏷️ Géneros</div>
             </div>
             <div className="stat-item">
-              <div className="stat-number">0</div>
-              <div className="stat-label">Completados</div>
+              <div className="stat-number">
+                {loading ? (
+                  <span className="loading-skeleton">...</span>
+                ) : error ? (
+                  '—'
+                ) : (
+                  <AnimatedCounter target={stats.completedGames} duration={2400} />
+                )}
+              </div>
+              <div className="stat-label">⭐ Completados</div>
             </div>
           </div>
         </div>
@@ -85,7 +112,7 @@ const Home: React.FC = () => {
               <div className="feature-icon">📚</div>
               <h3 className="feature-title">Gestionar Colección</h3>
               <p className="feature-description">
-                Organiza todos tus videojuegos en un solo lugar
+                Organiza todos los videojuegos en un solo lugar
               </p>
             </div>
 
@@ -93,7 +120,7 @@ const Home: React.FC = () => {
               <div className="feature-icon">🏷️</div>
               <h3 className="feature-title">Categorizar por Géneros</h3>
               <p className="feature-description">
-                Clasifica tus juegos por género para encontrarlos fácilmente
+                Clasifica los juegos por género para encontrarlos fácilmente
               </p>
             </div>
 
@@ -103,15 +130,13 @@ const Home: React.FC = () => {
               <p className="feature-description">
                 Califica y revisa tus juegos favoritos
               </p>
+              <p>
+                Proximamente...
+              </p>
+
             </div>
 
-            <div className="feature-card">
-              <div className="feature-icon">🎯</div>
-              <h3 className="feature-title">Seguimiento de Progreso</h3>
-              <p className="feature-description">
-                Mantén un registro de tu progreso en cada juego
-              </p>
-            </div>
+           
 
           </div>
         </div>

@@ -394,17 +394,18 @@
   width: 400%;
   height: 100%;
   background-image: 
-    radial-gradient(1px 1px at 29px 17px, rgba(255, 255, 255, 0.8), transparent),
-    radial-gradient(2px 2px at 73px 43px, rgba(255, 255, 255, 0.6), transparent),
-    radial-gradient(1px 1px at 119px 63px, rgba(255, 255, 255, 0.9), transparent),
-    radial-gradient(2px 2px at 167px 21px, rgba(255, 255, 255, 0.7), transparent),
-    radial-gradient(1px 1px at 211px 51px, rgba(255, 255, 255, 0.8), transparent),
-    radial-gradient(2px 2px at 259px 37px, rgba(255, 255, 255, 0.6), transparent);
+    radial-gradient(1px 1px at 29px 17px, rgba(255, 255, 255, 0.4), transparent),
+    radial-gradient(2px 2px at 73px 43px, rgba(255, 255, 255, 0.3), transparent),
+    radial-gradient(1px 1px at 119px 63px, rgba(255, 255, 255, 0.5), transparent),
+    radial-gradient(2px 2px at 167px 21px, rgba(255, 255, 255, 0.35), transparent),
+    radial-gradient(1px 1px at 211px 51px, rgba(255, 255, 255, 0.4), transparent),
+    radial-gradient(2px 2px at 259px 37px, rgba(255, 255, 255, 0.3), transparent);
   background-repeat: repeat;
   background-size: 300px 80px;
   animation: moveParticlesBright 20s linear infinite;
   z-index: 1;
   pointer-events: none;
+  filter: blur(2px);
 }
 
 @keyframes moveParticlesBright {
@@ -464,6 +465,21 @@
   color: #d1d5db;
   font-size: 0.95rem;
   font-weight: 500;
+}
+
+/* Loading skeleton para stats */
+.loading-skeleton {
+  color: #6b7280;
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.3;
+  }
 }
 
 /* ===== ANIMATIONS ===== */
@@ -550,7 +566,7 @@
   }
   
   .features-grid {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     gap: 24px;
   }
 }
@@ -577,7 +593,7 @@
   }
   
   .features-grid {
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
   }
   
   .hero-section {
