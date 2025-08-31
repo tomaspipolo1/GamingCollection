@@ -31,6 +31,9 @@ FROM nginx:alpine
 # Copiar configuración personalizada de Nginx
 COPY nginx.conf /etc/nginx/nginx.conf
 
+# Eliminar configuración por defecto que puede interferir
+RUN rm -f /etc/nginx/conf.d/default.conf
+
 # Copiar archivos construidos desde la etapa anterior
 COPY --from=builder /app/build /usr/share/nginx/html
 
