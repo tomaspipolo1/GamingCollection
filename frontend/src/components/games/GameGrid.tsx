@@ -9,9 +9,10 @@ interface GameGridProps {
   games: Game[];
   onEdit: (game: Game) => void;
   onDelete: (game: Game) => void;
+  onViewDetails: (game: Game) => void;
 }
 
-const GameGrid: React.FC<GameGridProps> = ({ games, onEdit, onDelete }) => {
+const GameGrid: React.FC<GameGridProps> = ({ games, onEdit, onDelete, onViewDetails }) => {
   if (!games || games.length === 0) {
     return (
       <div className="empty-games-container">
@@ -33,6 +34,7 @@ const GameGrid: React.FC<GameGridProps> = ({ games, onEdit, onDelete }) => {
             game={game}
             onEdit={onEdit}
             onDelete={onDelete}
+            onViewDetails={onViewDetails}
           />
         ))}
       </div>

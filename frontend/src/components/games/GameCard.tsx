@@ -8,9 +8,10 @@ interface GameCardProps {
   game: Game;
   onEdit: (game: Game) => void;
   onDelete: (game: Game) => void;
+  onViewDetails: (game: Game) => void;
 }
 
-const GameCard: React.FC<GameCardProps> = ({ game, onEdit, onDelete }) => {
+const GameCard: React.FC<GameCardProps> = ({ game, onEdit, onDelete, onViewDetails }) => {
   // Función unificada para renderizar la sección de precio
   const renderPriceSection = (price: number, currency?: string) => {
     // Caso 1: Precio es 0 → Solo "Gratis"
@@ -115,7 +116,7 @@ const GameCard: React.FC<GameCardProps> = ({ game, onEdit, onDelete }) => {
   const platformIcon = getPlatformIcon(game.platform);
 
   return (
-    <div className="game-card">
+    <div className="game-card" onClick={() => onViewDetails(game)}>
       {/* Imagen del juego */}
       <div className="game-image-container">
         <div className="game-image-placeholder">
@@ -162,14 +163,20 @@ const GameCard: React.FC<GameCardProps> = ({ game, onEdit, onDelete }) => {
       <div className="game-actions">
         <button 
           className="btn-action edit" 
-          onClick={() => onEdit(game)} 
+          onClick={(e) => {
+            e.stopPropagation();
+            onEdit(game);
+          }} 
           title="Editar juego"
         >
           ✏️
         </button>
         <button 
           className="btn-action delete" 
-          onClick={() => onDelete(game)} 
+          onClick={(e) => {
+            e.stopPropagation();
+            onDelete(game);
+          }} 
           title="Eliminar juego"
         >
           🗑️

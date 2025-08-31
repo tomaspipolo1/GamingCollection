@@ -41,7 +41,7 @@ const Home: React.FC = () => {
                    Bienvenido a <span className="highlight">Gaming Collection</span>
                  </h1>
             <p className="hero-subtitle">
-              Tu plataforma definitiva para gestionar tu colección de videojuegos
+              Tu plataforma definitiva para gestionar la colección de videojuegos
             </p>
             <div className="hero-buttons">
               <button className="btn-primary" onClick={handleExploreGames}>

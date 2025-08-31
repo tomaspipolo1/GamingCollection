@@ -5,6 +5,7 @@ import Swal from 'sweetalert2';
 import GameGrid from '../../components/games/GameGrid';
 import AddGameModal from '../../components/games/AddGameModal';
 import EditGameModal from '../../components/games/EditGameModal';
+import DetailGameModal from '../../components/games/DetailGameModal';
 import { ConnectionStatus } from '../../components/common';
 import { useGames } from '../../hooks/useGames';
 import { Game } from '../../types';
@@ -28,7 +29,9 @@ const Games: React.FC = () => {
 
   const [showAddModal, setShowAddModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
+  const [showDetailModal, setShowDetailModal] = useState(false);
   const [gameToEdit, setGameToEdit] = useState<Game | null>(null);
+  const [gameToView, setGameToView] = useState<Game | null>(null);
 
   // Handle delete with SweetAlert confirmation
   const handleDeleteClick = async (game: Game) => {
@@ -100,6 +103,12 @@ const Games: React.FC = () => {
   const handleEditClick = (game: Game) => {
     setGameToEdit(game);
     setShowEditModal(true);
+  };
+
+  // Handle view details click
+  const handleViewDetails = (game: Game) => {
+    setGameToView(game);
+    setShowDetailModal(true);
   };
 
   // Handle add new game
@@ -204,6 +213,7 @@ const Games: React.FC = () => {
               games={games}
               onEdit={handleEditClick}
               onDelete={handleDeleteClick}
+              onViewDetails={handleViewDetails}
             />
           )}
         </div>
@@ -269,6 +279,16 @@ const Games: React.FC = () => {
         onRefresh={() => {
           // Refresh games list after editing
           window.location.reload();
+        }}
+      />
+
+      {/* ===== DETAIL GAME MODAL ===== */}
+      <DetailGameModal
+        isOpen={showDetailModal}
+        game={gameToView}
+        onClose={() => {
+          setShowDetailModal(false);
+          setGameToView(null);
         }}
       />
     </div>
