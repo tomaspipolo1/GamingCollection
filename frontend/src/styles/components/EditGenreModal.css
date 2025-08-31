@@ -11,8 +11,16 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 1000;
+  z-index: 99999;
   padding: 20px;
+}
+
+/* Scroll lock para el modal */
+body.modal-open, html.modal-open {
+  overflow: hidden;
+  position: fixed;
+  width: 100%;
+  height: 100%;
 }
 
 .edit-genre-modal-content {
@@ -25,6 +33,7 @@
   max-height: 90vh;
   overflow-y: auto;
   position: relative;
+  z-index: 100000;
 }
 
 /* Header del modal */

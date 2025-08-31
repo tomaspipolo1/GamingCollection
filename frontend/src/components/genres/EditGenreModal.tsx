@@ -1,6 +1,7 @@
 // ===== EDIT GENRE MODAL =====
 
 import React, { useState, useEffect } from 'react';
+import ReactDOM from 'react-dom';
 import Swal from 'sweetalert2';
 import GenreForm from './GenreForm';
 import { Genre, GenreInput } from '../../types';
@@ -118,7 +119,8 @@ const EditGenreModal: React.FC<EditGenreModalProps> = ({
   // No renderizar si no está abierto o no hay género
   if (!isOpen || !genre) return null;
 
-  return (
+  // Usar Portal para renderizar fuera del árbol DOM
+  return ReactDOM.createPortal(
     <div className="edit-genre-modal-overlay" role="dialog" aria-modal="true">
       <div className="edit-genre-modal-content">
         {/* ===== HEADER DEL MODAL ===== */}
@@ -145,7 +147,8 @@ const EditGenreModal: React.FC<EditGenreModalProps> = ({
           />
         </div>
       </div>
-    </div>
+    </div>,
+    document.body
   );
 };
 

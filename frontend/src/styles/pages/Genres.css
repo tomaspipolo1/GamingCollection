@@ -6,7 +6,28 @@
   display: flex;
   flex-direction: column;
   position: relative;
-  /* Background moved to MainLayout */
+  background-image: url('../../../public/images/backgrounds/bg-1.jpg');
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+.genres-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(3px);
+  z-index: 0;
+}
+
+.genres-container > * {
+  position: relative;
+  z-index: 1;
 }
 
 .genres-content {
@@ -265,6 +286,9 @@
 
 /* ===== RESPONSIVE - TABLET ===== */
 @media (min-width: 768px) {
+  .genres-container {
+    background-attachment: scroll; /* Mejor para móviles */
+  }
   .genres-content {
     padding: 24px;
     padding-top: 100px;
@@ -375,4 +399,15 @@
   width: 16px;
   height: 16px;
   border-width: 2px;
+}
+
+/* ===== MOBILE OPTIMIZATION ===== */
+@media (max-width: 767px) {
+  .genres-container {
+    background-attachment: scroll;
+  }
+  
+  .genres-container::before {
+    backdrop-filter: blur(2px);
+  }
 }
