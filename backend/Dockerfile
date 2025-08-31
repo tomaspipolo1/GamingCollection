@@ -1,16 +1,9 @@
 # ===== DOCKERFILE PARA BACKEND =====
-# Imagen base: Node.js 18 Alpine (ligera y segura)
-FROM node:18-alpine
+# Imagen base: Node.js 18 (más compatible con dependencias nativas)
+FROM node:18
 
 # Establecer directorio de trabajo
 WORKDIR /app
-
-# Instalar dependencias del sistema necesarias
-RUN apk add --no-cache \
-    python3 \
-    make \
-    g++ \
-    && rm -rf /var/cache/apk/*
 
 # Copiar archivos de dependencias primero (para aprovechar cache de Docker)
 COPY package*.json ./
@@ -22,10 +15,7 @@ RUN npm ci --only=production && npm cache clean --force
 COPY . .
 
 # Crear usuario no-root para seguridad
-RUN addgroup -g 1001 -S nodejs && \
-    adduser -S nodejs -u 1001
-
-# Cambiar propiedad de archivos al usuario nodejs
+RUN groupadd -r nodejs && useradd -r -g nodejs nodejs
 RUN chown -R nodejs:nodejs /app
 USER nodejs
 

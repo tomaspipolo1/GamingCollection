@@ -1,0 +1,41 @@
+version: "3.9"
+
+services:
+  # Base de datos MongoDB
+  mongodb:
+    image: mongo:latest
+    container_name: gaming-mongodb
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: password123
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+
+  # Backend API
+  backend:
+    image: tomaspipolo1/gaming-backend:latest
+    container_name: gaming-backend
+    restart: always
+    ports:
+      - "5000:5000"
+    environment:
+      MONGODB_URI: mongodb://admin:password123@mongodb:27017/gaming_collection?authSource=admin
+      NODE_ENV: production
+    depends_on:
+      - mongodb
+
+  # Frontend React
+  frontend:
+    image: tomaspipolo1/gaming-frontend:latest
+    container_name: gaming-frontend
+    restart: always
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+
+volumes:
+  mongodb_data:
