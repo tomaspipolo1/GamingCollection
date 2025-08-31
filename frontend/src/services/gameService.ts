@@ -4,7 +4,7 @@ import axios from 'axios';
 import { Game, GamesResponse, GameInput, GameFilters } from '../types';
 
 // API Base URL - adjust according to your backend
-const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
+const API_BASE_URL = process.env.REACT_APP_API_URL || '/api';
 
 // Create axios instance
 const api = axios.create({

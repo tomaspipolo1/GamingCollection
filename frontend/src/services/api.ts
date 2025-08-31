@@ -5,7 +5,7 @@ import { ApiResponse, ApiListResponse, ApiError } from '../types';
 import NotificationService from './notificationService';
 
 // Configuración base de Axios
-const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+const API_BASE_URL = process.env.REACT_APP_API_URL || '/api';
 
 // Crear instancia de Axios
 export const apiClient: AxiosInstance = axios.create({

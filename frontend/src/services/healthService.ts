@@ -2,8 +2,8 @@
 
 import axios from 'axios';
 
-// API Base URL for health checks
-const API_BASE_URL = process.env.REACT_APP_BACKEND_URL || 'http://localhost:5000';
+// API Base URL for health checks (usa el proxy /api de Nginx)
+const API_BASE_URL = process.env.REACT_APP_BACKEND_URL || '/api';
 
 // Create axios instance for health checks
 const healthApi = axios.create({
@@ -28,14 +28,14 @@ export interface ApiStatus {
 
 export const healthService = {
   
-  // Check if backend is running
+  // Check if backend is running (usa un endpoint existente bajo /api)
   async checkHealth(): Promise<HealthStatus> {
     try {
-      const response = await healthApi.get('/health');
+      // Un GET ligero a /games confirma conectividad con el backend
+      await healthApi.get('/games', { params: { limit: 1, page: 1 } });
       return {
         status: 'OK',
-        timestamp: response.data.timestamp,
-        uptime: response.data.uptime
+        timestamp: new Date().toISOString(),
       };
     } catch (error) {
       console.error('Health check failed:', error);
@@ -47,16 +47,13 @@ export const healthService = {
     }
   },
 
-  // Check API status and get info
+  // Check API status (también usando un endpoint válido bajo /api)
   async checkApiStatus(): Promise<ApiStatus> {
     try {
-      const response = await healthApi.get('/');
+      await healthApi.get('/games', { params: { limit: 1, page: 1 } });
       return {
         isConnected: true,
-        version: response.data.version,
-        message: response.data.message,
-        description: response.data.description,
-        endpoints: response.data.endpoints
+        message: 'OK'
       };
     } catch (error) {
       console.error('API status check failed:', error);
@@ -70,7 +67,7 @@ export const healthService = {
   // Simple ping test
   async ping(): Promise<boolean> {
     try {
-      await healthApi.get('/health', { timeout: 3000 });
+      await healthApi.get('/games', { params: { limit: 1, page: 1 }, timeout: 3000 });
       return true;
     } catch (error) {
       return false;
