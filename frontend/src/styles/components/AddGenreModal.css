@@ -71,14 +71,14 @@
 @media (max-width: 768px) {
   .add-genre-modal-content {
     margin: 10px;
-    max-height: 95vh;
+    max-height: 85vh; /* antes 95vh */
   }
   
   .modal-header {
-    padding: 15px 15px 0 15px;
+    padding: 12px 14px 0 14px;
   }
   
   .modal-body {
-    padding: 0 15px 15px 15px;
+    padding: 0 12px 12px 12px;
   }
 }

@@ -253,7 +253,7 @@ body.modal-open, html.modal-open {
 @media (max-width: 768px) {
   .detail-game-modal-content {
     margin: 10px;
-    max-height: 95vh;
+    max-height: 85vh; /* antes 95vh */
   }
   
   .modal-header {
@@ -261,8 +261,8 @@ body.modal-open, html.modal-open {
   }
   
   .modal-title-centered {
-    margin-bottom: 20px;
-    padding: 12px 0;
+    margin-bottom: 18px;
+    padding: 10px 0;
   }
   
   .modal-body {
@@ -271,12 +271,12 @@ body.modal-open, html.modal-open {
   
   .detail-content {
     grid-template-columns: 1fr;
-    gap: 24px;
+    gap: 20px;
   }
   
   .detail-row {
     grid-template-columns: 1fr;
-    gap: 16px;
+    gap: 14px;
   }
   
   .detail-game-modal-content .game-image-container {
@@ -285,7 +285,7 @@ body.modal-open, html.modal-open {
   }
   
   .detail-title {
-    font-size: 1.5rem;
+    font-size: 1.4rem;
     text-align: center;
   }
 }
@@ -305,7 +305,7 @@ body.modal-open, html.modal-open {
   }
   
   .detail-description {
-    min-height: 100px;
-    max-height: 150px;
+    min-height: 90px;
+    max-height: 140px;
   }
 }
